@@ -1,4 +1,4 @@
-*simple shell*
+**simple shell**
 A simple shell written in c language. It allow the execution of functions like exit, env, cd and ls.
 Only system calls were used.
 
