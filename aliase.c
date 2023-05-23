@@ -1,37 +1,41 @@
 #include "main.h"
 
-
+/**
+ * unalias_func - removes and alias from memory
+ * @info: global data struction for application state
+ * Return: 1 after every call
+ */
 int unalias_func(g_data *info)
 {
-    l_node *tmp, *prev;
-    int idx = 1, result = 0;
+	l_node *tmp, *prev;
+	int idx = 1, result = 0;
 
-    if (info->arguments[1])
-    {
-        tmp = info->alias_db;
+	if (info->arguments[1])
+	{
+		tmp = info->alias_db;
 
-        while (info->arguments[idx] != NULL)
-        {
-            while (tmp != NULL)
-            {
-                prev = tmp;
-                if (_strcmp(info->arguments[idx], tmp->data) == 0)
-                {
-                    prev->next = tmp->next;
-                    free(tmp->data);
-                    free(tmp->sub_data);
-                    break;
-                }
-                tmp = tmp->next;
-            }
-            idx++;
-        }
-    }
-    else{
-        _puts("unalias: usage: unalias [-a] name [name ...]");
-    }
- 
-    return (1);
+		while (info->arguments[idx] != NULL)
+		{
+			while (tmp != NULL)
+			{
+				prev = tmp;
+				if (_strcmp(info->arguments[idx], tmp->data) == 0)
+				{
+					prev->next = tmp->next;
+					free(tmp->data);
+					free(tmp->sub_data);
+					break;
+				}
+				tmp = tmp->next;
+			}
+			idx++;
+		}
+	}
+	else
+	{
+		_puts("unalias: usage: unalias [-a] name [name ...]");
+	}
+	return (1);
 }
 
 /**
