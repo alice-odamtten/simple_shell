@@ -64,20 +64,20 @@ int set_alias(g_data *info)
 				idx++;
 				continue;
 			}
-        	}
+		}
 
 		while (token != NULL)
 		{
 			ensure_full_alias[excess_count] = token;
 			excess_count++;
-			token= _sttrtok(NULL, " \t\n");
+			token = _sttrtok(NULL, " \t\n");
 		}
 		ensure_full_alias[excess_count] = NULL;
 		ptr = ensure_full_alias;
 		process_alias(info, &ptr, &excess_count);
 		excess_count = 0;
-		idx++;     
-    	}
+		idx++;
+	}
 	return (1);
 }
 
@@ -100,7 +100,7 @@ void process_alias(g_data *info, char ***aliases, int *excess_count)
 		return;
 	}
 	cmd = temp;
-	for (j= 0; j < *excess_count - 1; j++)
+	for (j = 0; j < *excess_count - 1; j++)
 	{
 		alias = _strdup((*aliases)[j]);
 		j++;
@@ -108,7 +108,7 @@ void process_alias(g_data *info, char ***aliases, int *excess_count)
 		{
 			_strcpy(cmd, _strdup((*aliases)[j]));
 			j++;
-			while(j < *excess_count)
+			while (j < *excess_count)
 			{
 				_strcat(cmd, " ");
 				_strcat(cmd, _strdup((*aliases)[j]));
@@ -118,10 +118,10 @@ void process_alias(g_data *info, char ***aliases, int *excess_count)
 		}
 		else
 		{
-			cmd = _strlen((*aliases)[j]) > 0 ? surround_with_quotes(_strdup((*aliases)[j])) 
-                : NULL;
- 		}
-        }
+			cmd = _strlen((*aliases)[j]) > 0 ?
+			surround_with_quotes(_strdup((*aliases)[j])) : NULL;
+		}
+	}
 	if (!cmd)
 		perform_alias_insert(info, &alias, NULL);
 	else
@@ -139,9 +139,10 @@ int free_alias(const char *str)
 {
 	char *temp, ptr;
 	int result;
+
 	temp = _strchr(str, '=');
 
-	if(!temp)
+	if (!temp)
 		return (1);
 
 	ptr = *temp;
@@ -155,15 +156,15 @@ int free_alias(const char *str)
  * @str: the string to add qoutes
  * Return: a quouted string
  */
-char* surround_with_quotes(char* str)
+char *surround_with_quotes(char *str)
 {
 	size_t len = _strlen(str);
-	char* quoted_str = malloc(len + 3); // Allocate memory for the quoted string
+	char *quoted_str = malloc(len + 3);
 
 	if (quoted_str == NULL)
 	{
 		_eputs("Error: Could not allocate memory for quoted string.");
-		return NULL;
+		return (NULL);
 	}
 
 	quoted_str[0] = '\'';
@@ -173,7 +174,7 @@ char* surround_with_quotes(char* str)
 	quoted_str[len + 1] = '\'';
 	quoted_str[len + 2] = '\0';
 
-	return quoted_str;
+	return (quoted_str);
 }
 
 /**
@@ -181,7 +182,8 @@ char* surround_with_quotes(char* str)
  * @str: the string
  * Returns: 1 if true  or 0
  */
-int contains_quotes(const char* str) {
+int contains_quotes(const char *str)
+{
 	return (_strchr(str, '\"') != NULL) || (_strchr(str, '\'') != NULL);
 }
 
@@ -195,7 +197,7 @@ int is_valid_alias(g_data *info, char *s)
 {
 	char *arg_check;
 
-    	arg_check = _strchr(s, '=');
+	arg_check = _strchr(s, '=');
 	if (!arg_check)
 	{
 		error_handler(info, 127);
@@ -231,7 +233,7 @@ l_node *find_alias(g_data *info, int idx)
  * perform_alias_insert - inserts an alias into the alias db
  * @data: alias key
  * @sd: alias value
- * Returns: nothing 
+ * Returns: nothing
  */
 void perform_alias_insert(g_data *info, char **data, char **sd)
 {
