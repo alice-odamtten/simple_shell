@@ -1,19 +1,17 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-// i/o and parsing command libs
-#include <stdio.h>
-#include <string.h>
+/*#include <stdio.h>*/
 #include <stdlib.h>
 #include <errno.h>
 
-// forking child process libs
+/* forking child process libs */
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 
-// stat
+/*stat */
 #include <sys/stat.h>
 
 #define MAX_COMMAND_LENGTH 1024
@@ -46,22 +44,21 @@ typedef struct builtins {
     int (*handler)(g_data *);
 } csh_builtin;
 
-//environ
+/* environ */
 extern char **environ;
 
-// parser.c
-void parseCommand(g_data *info);
-char* findCommandPath(const char *command);
-void printPathDirectories();
+/* parser.c */
+void parse_command(g_data *info);
+/*char* find_command_path(const char *command);*
 
 int is_cmd(char *path);
 void cmd_handler(g_data *info, int c);
 
-// env
+/* env */
 char *_getenv(const char *name, char **_environ);
 
 
-// builtins
+/* builtins */
 int exit_func(g_data *info);
 int cd_func(g_data *info);
 int alias_func(g_data *info);
@@ -69,7 +66,7 @@ int help_func(g_data *info);
 int unalias_func(g_data *info);
 int builtin_setenv(const char *a, const char *e);
 
-// misc.d
+/* misc.d */
 char **init_g_data(g_data *info, char **av, char **env, int c);
 void free_all(g_data *);
 ssize_t is_shell_interactive();
@@ -80,7 +77,7 @@ void process_interactive_commands(g_data *info);
 int find_and_exec_cmd(g_data *info);
 int _strncmp(const char *s, const char *t, size_t len);
 
-// string helpers
+/*  string helpers */
 int _strlen(char *s);
 void _memcpy(void *dest, const void *src, unsigned int n);
 char* sanitize_string(char* str);
@@ -88,7 +85,7 @@ char* sanitize_string2(char *str);
 char* surround_with_quotes(char* str);
 int contains_quotes(const char* str);
 
-// aliases.c
+/* aliases.c */
 int set_alias(g_data *info);
 int is_valid_alias(g_data *info, char *s);
 l_node *find_alias(g_data *info, int idx);
@@ -96,29 +93,29 @@ void perform_alias_insert(g_data *info, char **data, char **sd);
 void process_alias(g_data *info, char ***k, int *excess_count);
 int token_copier(g_data *info, char **token, int *i);
 
-// add_node.c
+/* add_node.c */
 void insert_at_end(l_node **head, char *str, char *sub_data);
 
-// linkedlist.c
+/* linkedlist.c */
 void print_list(struct node *head);
 void freeList(l_node **head);
 
-// _puts(char *e);
+/*  _puts(char *e);*/
 void _puts(const char *s);
 void _putchar(char c);
 void _eputchar(char c);
 void _eputs(const char *s);
 void _print_one_line(const char *s);
 
-// parser.c
+/* parser.c */
 char *find_command_path(g_data *info, const char * command);
 
-// main
+/* main */
 char *sh_read_line(g_data *info);
 int path_finder(g_data *info);
 ssize_t handle_builtins(g_data *info);
 
-//setenv
+/* setenv */
 int _existadd(char **env, char *buffer);
 int _setenv(const char *n, const char *val, int w);
 int _envp(g_data *info);
@@ -127,7 +124,7 @@ int setenv_func(g_data *info);
 int unsetenv_func(g_data *info);
 int _unsetenv(g_data *info, char *var);
 
-// strings_helper_ext.c
+/* strings_helper_ext.c */
 int _strcmp(const char *s, const char *t);
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *s);
@@ -136,7 +133,7 @@ char *_strncat(char *t, const char *s, int n);
 char *_strcat(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
 
-// error_handler.c
+/* error_handler.c */
 char *env_err(g_data *info);
 int error_handler(g_data *info, int err_val);
 char *atoi_rev(int n);
@@ -147,26 +144,25 @@ char *get_cd_error(g_data *info);
 char *exit_shell_err(g_data *info);
 char *strcat_cd(g_data *info, char *msg, char *error, char *ver_str);
 
-// alias extended
+/* alias extended */
 void print_alias(l_node *tmp);
 void file_error(g_data *info);
 
-// strtok.c
+/* strtok.c */
 char *_strpbrk(const char *str, const char *set);
 char *_sttrtok(char *p, const char *delim);
 int _getline(char **line, size_t len, int fd);
 
-// error_ext.c
+/* error_ext.c */
 int process_file_commands(g_data *info, int fd);
 void _eprint_one_line(const char *s);
 
-// string_helpers_aux.c
+/* string_helpers_aux.c */
 char *_strcspn(char *str);
 int _atoi(const char *src);
 char *_strchr(const char *r, char c);
 char *_strncpy(char *dest, char *src, int n);
 
-// 
 int process_non_interactive_commands(g_data *info);
 void *_realloc(void *ptr, size_t os, size_t nsize);
 #endif

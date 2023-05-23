@@ -43,7 +43,7 @@ int cd_func(g_data *info)
 			return (-1);
 		}
 	}
-	else if (strcmp(info->arguments[1], "-") == 0)
+	else if (_strcmp(info->arguments[1], "-") == 0)
 	{
 		d = _getenv("OLDPWD", info->environ);
 		if (d == NULL)
@@ -120,7 +120,7 @@ int alias_func(g_data *info)
  * @info: globals and state management
  * Return: 1 or 0
  */
-int help_func(g_data *info)
+int help_func(__attribute__((unsed)) g_data *info)
 {
 	_puts("Simple Shell");
 	_puts("builtin commands avaiable are:");

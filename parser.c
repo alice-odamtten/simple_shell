@@ -7,8 +7,8 @@
  */
 void parse_command(g_data *info)
 {
-	int argIndex = 0, idx = 0;
-	char *token, *rest, *alias_cmd;
+	int argIndex = 0;
+	char *token, *rest;
 	char *quote = "\"'";
 	char *delim = " \t\n\r\a";
 	l_node *alias;
@@ -53,29 +53,29 @@ void parse_command(g_data *info)
 char *find_command_path(g_data *info, const char *command)
 {
 	char *path_env, *path_env_cpy, *path;
-	char *command_path[MAXIMUM_CONTENT_LENGTH];
+	char *command_path[MAXIMUM_COMMAND_LENGTH];
 
 	path_env = _getenv("PATH", info->environ);
-	path_env_cpy = strdup(path_env);
+	path_env_cpy = _strdup(path_env);
 
 	path = _sttrtok(path_env_cpy, ":");
 
 	while (path != NULL)
 	{
-		strcpy(command_path, path);
+		_strcpy(command_path, path);
 
-		if (commandPath[strlen(command_path) - 1] != '/')
-			strcat(command_path, "/");
+		if (command_path[_strlen(command_path) - 1] != '/')
+			_strcat(command_path, "/");
 
-		strcat(command_path, command);
+		_strcat(command_path, command);
 
 		if (access(command_path, F_OK) == 0)
 		{
 			free(path_env_cpy);
-			return (strdup(command_path));
+			return (_strdup(command_path));
 		}
 
-		path = strtok(NULL, ":");
+		path = _sttrtok(NULL, ":");
 	}
 
 	free(path_env_cpy);
@@ -89,7 +89,7 @@ char *find_command_path(g_data *info, const char *command)
  */
 char *sanitize_string(char *str)
 {
-	int len = strlen(str), j = 0, i;
+	int len = _strlen(str), j = 0, i;
 	char *sanitized_str = malloc(len * 2 + 1);
 
 	if (sanitized_str == NULL)
@@ -117,8 +117,8 @@ char *sanitize_string(char *str)
  */
 char *sanitize_string2(char *str)
 {
-	int len = strlen(str), j = 0, i;
-	char sanitized_str[(len * 2) + 1];
+	int len = _strlen(str), j = 0, i;
+	char sanitized_str[MAXIMUM_COMMAND_LENGTH];
 
 	for (i = 0; i < len; i++)
 	{
@@ -130,5 +130,5 @@ char *sanitize_string2(char *str)
 	}
 	sanitized_str[j] = '\0';
 
-	return (strdup(sanitized_str));
+	return (_strdup(sanitized_str));
 }

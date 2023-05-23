@@ -8,7 +8,7 @@
 int unalias_func(g_data *info)
 {
 	l_node *tmp, *prev;
-	int idx = 1, result = 0;
+	int idx = 1;
 
 	if (info->arguments[1])
 	{
@@ -46,7 +46,7 @@ int unalias_func(g_data *info)
 int set_alias(g_data *info)
 {
 	int idx = 1, excess_count = 0;
-	char *token, *arg_check, *ensure_full_alias[100], *token_copy;
+	char *token, *ensure_full_alias[100];
 	char **ptr;
 
 	while (idx <= info->number_of_args && info->arguments[idx] != NULL)
@@ -137,7 +137,7 @@ void process_alias(g_data *info, char ***aliases, int *excess_count)
  */
 int free_alias(const char *str)
 {
-	char *temp, ptr;
+	char *temp;
 	int result;
 
 	temp = _strchr(str, '=');

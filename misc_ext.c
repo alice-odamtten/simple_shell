@@ -44,7 +44,7 @@ int error_handler(g_data *info, int err_val)
  */
 ssize_t handle_builtins(g_data *info)
 {
-	iint idx, result = -1;
+	int idx, result = -1;
 	csh_builtin cbuiltins[] = {
 	{"exit", exit_func},
 	{"cd", cd_func},
@@ -84,13 +84,13 @@ ssize_t handle_builtins(g_data *info)
 
 int _strncmp(const char *s, const char *t, size_t len)
 {
-	int i = 0;
+	size_t i = 0;
 
 	while ((*s && (*s == *t)) && i < len)
 	{
 		++s;
 		++t;
-		i++
+		i++;
 	}
 	return (*(const unsigned char *)s - *(const unsigned char *)t);
 }

@@ -48,7 +48,7 @@ void cmd_handler(g_data *info, int c)
 {
 	int fd = 0;
 
-	if (c == 1i && is_shell_interactive())
+	if (c == 1 && is_shell_interactive())
 	{
 		process_interactive_commands(info);
 	}

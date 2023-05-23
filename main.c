@@ -29,15 +29,7 @@ char *sh_read_line(g_data *info)
 
 	if (_getline(&line, buflen, info->readfd) == -1)
 	{
-		if (feof(stdin))
-		{
-			perror("getline");
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			exit(EXIT_FAILURE);
-		}
+		exit(EXIT_FAILURE);
 	}
 	return (line);
 }
@@ -56,11 +48,11 @@ void process_interactive_commands(g_data *info)
 		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
 
-		strcpy(info->command, sh_read_line(info));
+		_strcpy(info->command, sh_read_line(info));
 		fflush(stdin);
 
 		_strcspn(info->command);
-		if (strlen(info->command) == 0)
+		if (_strlen(info->command) == 0)
 		{
 			ret = 1;
 			continue;
@@ -120,7 +112,7 @@ int process_non_interactive_commands(g_data *info)
 
 	info->readfd = 0;
 
-	strcpy(info->command, sh_read_line(info));
+	_strcpy(info->command, sh_read_line(info));
 	fflush(stdin);
 
 	_strcspn(info->command);
