@@ -42,3 +42,33 @@ char *sh_read_line(g_data *info)
 	return (line);
 }
 
+/**
+ * process_interactive_commands - for handling interactive cmds
+ * @info: global data for state management
+ * Return: nothing
+ */
+void process_interactive_commands(g_data *info)
+{
+	int ret = 1;
+
+	while (ret == 1)
+	{
+		write(STDOUT_FILENO, "$ ", 2);
+		fflush(stdout);
+
+		strcpy(info->command, sh_read_line(info));
+		fflush(stdin);
+
+		_strcspn(info->command);
+		if (strlen(info->command) == 0)
+		{
+			ret = 1;
+			continue;
+		}
+		ret = find_and_exec_cmd(info);
+
+		info->counter += 1;
+	}
+}
+
+
