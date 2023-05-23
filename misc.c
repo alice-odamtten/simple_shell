@@ -50,3 +50,14 @@ ssize_t is_shell_interactive(void)
 	return (isatty(STDIN_FILENO));
 }
 
+/**
+ * free_all - frees global pointers
+ * @info: global variables
+ * Return: nothing
+ */
+void free_all(g_data *info)
+{
+
+	free(info->environ);
+	freeList(&(info->alias_db));
+}
