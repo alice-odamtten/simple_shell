@@ -166,52 +166,65 @@ char* surround_with_quotes(char* str)
 		return NULL;
 	}
 
-    // Add the opening quote
-    quoted_str[0] = '\'';
-    
-    // Copy the original string
-    _strncpy(quoted_str + 1, str, len);
+	quoted_str[0] = '\'';
 
-    // Add the closing quote
-    quoted_str[len + 1] = '\'';
-    quoted_str[len + 2] = '\0';
+	_strncpy(quoted_str + 1, str, len);
 
-    return quoted_str;
+	quoted_str[len + 1] = '\'';
+	quoted_str[len + 2] = '\0';
+
+	return quoted_str;
 }
 
+/**
+ * contains_qoutes - checks if a string contains qoute
+ * @str: the string
+ * Returns: 1 if true  or 0
+ */
 int contains_quotes(const char* str) {
-    return (_strchr(str, '\"') != NULL) || (_strchr(str, '\'') != NULL);
+	return (_strchr(str, '\"') != NULL) || (_strchr(str, '\'') != NULL);
 }
 
+/**
+ * is_valid_alias - checks if an alias
+ * @info: global data struction for application state
+ * @s: the alias string
+ * Return: 1 if true 0r 0 if false
+ */
 int is_valid_alias(g_data *info, char *s)
 {
-    char *arg_check;
+	char *arg_check;
 
-    arg_check = _strchr(s, '=');
-    if (!arg_check)
-    {
-        error_handler(info, 127);
-        return (0);
-    }
+    	arg_check = _strchr(s, '=');
+	if (!arg_check)
+	{
+		error_handler(info, 127);
+		return (0);
+	}
 
-    return (1);
+	return (1);
 }
 
+/**
+ * find_alias - searches for an alias
+ * @info: global data structure for application state
+ * @idx: index to check for alias
+ */
 l_node *find_alias(g_data *info, int idx)
 {
-    l_node *tmp;
+	l_node *tmp;
 
-        tmp = info->alias_db;
-        while (tmp != NULL)
-        {
-            if (_strcmp(info->arguments[idx], tmp->data) == 0)
-            {
-                return tmp;
-            }
-            tmp = tmp->next;
-        }
+	tmp = info->alias_db;
+	while (tmp != NULL)
+	{
+		if (_strcmp(info->arguments[idx], tmp->data) == 0)
+		{
+			return tmp;
+		}
+		tmp = tmp->next;
+	}
 
-    return (NULL);
+	return (NULL);
 }
 
 void perform_alias_insert(g_data *info, char **data, char **sd)
