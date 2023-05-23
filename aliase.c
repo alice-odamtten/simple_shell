@@ -81,63 +81,73 @@ int set_alias(g_data *info)
 	return (1);
 }
 
+/**
+ * process_alias - process as part of the set alias method
+ * @info: global data struction for application state
+ * @alias: an array of aliases
+ * @execess_count: a counter
+ * Returns: nothing
+ */
 void process_alias(g_data *info, char ***aliases, int *excess_count)
 {
-        int j;
-        char *alias, *temp, *cmd;
+	int j;
+	char *alias, *temp, *cmd;
 
-        temp = malloc(sizeof(char *) * 32);
-        if (temp == NULL)
-        {
-            free(temp);
-            return;
-        }
-        cmd = temp;
-        for (j= 0; j < *excess_count - 1; j++)
-        {
-            alias = _strdup((*aliases)[j]);
-            j++;
-            if (_strlen((*aliases)[j]) > 0 && contains_quotes((*aliases)[j]))
-            {
-                _strcpy(cmd, _strdup((*aliases)[j]));
-                j++;
-                while(j < *excess_count)
-                {
-                    _strcat(cmd, " ");
-                    _strcat(cmd, _strdup((*aliases)[j]));
-                    j++;
-                }
-                cmd = surround_with_quotes(sanitize_string2(cmd));
-            }
-            else
-            {
-                cmd = _strlen((*aliases)[j]) > 0 ? surround_with_quotes(_strdup((*aliases)[j])) 
+	temp = malloc(sizeof(char *) * 32);
+	if (temp == NULL)
+	{
+		free(temp);
+		return;
+	}
+	cmd = temp;
+	for (j= 0; j < *excess_count - 1; j++)
+	{
+		alias = _strdup((*aliases)[j]);
+		j++;
+		if (_strlen((*aliases)[j]) > 0 && contains_quotes((*aliases)[j]))
+		{
+			_strcpy(cmd, _strdup((*aliases)[j]));
+			j++;
+			while(j < *excess_count)
+			{
+				_strcat(cmd, " ");
+				_strcat(cmd, _strdup((*aliases)[j]));
+				j++;
+			}
+			cmd = surround_with_quotes(sanitize_string2(cmd));
+		}
+		else
+		{
+			cmd = _strlen((*aliases)[j]) > 0 ? surround_with_quotes(_strdup((*aliases)[j])) 
                 : NULL;
-            }
+ 		}
         }
-            if (!cmd)
-                perform_alias_insert(info, &alias, NULL);
-            else
-                perform_alias_insert(info, &alias, &(cmd));
-        free(cmd);
-        free(temp);
+	if (!cmd)
+		perform_alias_insert(info, &alias, NULL);
+	else
+		perform_alias_insert(info, &alias, &(cmd));
+	free(cmd);
+	free(temp);
 }
 
-
+/**
+ * free_alias - checks and frees an alias
+ * @str: an alias string
+ * Return: 1 if success or 0 for failure
+ */
 int free_alias(const char *str)
 {
-    char *temp, ptr;
-    int result;
-    temp = _strchr(str, '=');
+	char *temp, ptr;
+	int result;
+	temp = _strchr(str, '=');
 
-    if(!temp)
-        return (1);
+	if(!temp)
+		return (1);
 
-    ptr = *temp;
-    *temp = 0;
-    // result = delete node here
+	ptr = *temp;
+	*temp = 0;
 
-    return (result);
+	return (result);
 }
 
 char* surround_with_quotes(char* str) {
