@@ -262,31 +262,38 @@ void perform_alias_insert(g_data *info, char **data, char **sd)
 	}
 }
 
+/**
+ * token_copier - copies the content of token
+ * @info: global data structure for application state
+ * @tken: an array of tokens
+ * @idx: index of token
+ * Return: 1 or 0
+ */
 int token_copier(g_data *info, char **token, int *idx)
 {
-    char *token_copy;
+	char *token_copy;
 
-    token_copy = malloc(sizeof(char *) * 1024);
-    if (!token_copy)
-    {
-        free(token_copy);
-        return (0);
-    }
-    _strcpy(token_copy, info->arguments[*idx]);
-    (*idx)++;
-    while (info->arguments[*idx] != NULL) 
-    {
-        _strcat(token_copy, " ");
-        _strcat(token_copy, info->arguments[*idx]);
+	token_copy = malloc(sizeof(char *) * 1024);
+	if (!token_copy)
+	{
+		free(token_copy);
+		return (0);
+	}
+	_strcpy(token_copy, info->arguments[*idx]);
+	(*idx)++;
+	while (info->arguments[*idx] != NULL) 
+	{
+		_strcat(token_copy, " ");
+		_strcat(token_copy, info->arguments[*idx]);
 
-        if((_strchr(info->arguments[*idx], '\'')) || (_strchr(info->arguments[*idx], '\"')))
-            break;
+		if((_strchr(info->arguments[*idx], '\'')) || (_strchr(info->arguments[*idx], '\"')))
+		break;
 
-           (*idx)++;
-    }
-    *token = _sttrtok(token_copy, "=");
-    free(token_copy);
+		(*idx)++;
+	}
+	*token = _sttrtok(token_copy, "=");
+	free(token_copy);
 
-    return (*idx);
+	return (*idx);
 }
 
