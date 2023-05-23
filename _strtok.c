@@ -1,119 +1,154 @@
 #include "main.h"
 
-/**
- * _strpbrk - breakes string into parets
- * @str: string
- * @set: part to break
- * Return: Alwats string
- */
-char *_strpbrk(const char *str, const char *set)
-{
-	const char *tr;
 
-	while (*str != '\0')
+
+/**
+ * _sttrtok - splits a string by some delimiter.
+ * @str: input string.
+ * @delim: delimiter.
+ *
+ * Return: string splited.
+ */
+char *_sttrtok(char str[], const char *delim)
+{
+	static char *next = NULL;
+	char *begin, *stop;
+
+	if (str != NULL) 
 	{
-		tr = set;
-		while (*tr != '\0')
-		{
-			if (*tr == *str)
-			{
-				return ((char *)str);
-			}
-			tr++;
-		}
-		str++;
+		next = str;
 	}
-	return (NULL);
+	if (next == NULL) 
+	{
+		return NULL;
+	}
+
+	begin = next;
+	while (*begin != '\0' && (_strchr(delim, *begin) != NULL)) 
+	{
+		begin++;
+	}
+
+	if (*begin == '\0')
+	{
+		next = NULL;
+		return NULL;
+	}
+	stop = begin + 1;
+	while (*stop != '\0' && (_strchr(delim, *stop) == NULL))
+	{
+		stop++;
+	}
+
+	if (*stop == '\0')
+	{
+		next = NULL;
+	}
+	else
+	{
+		*stop = '\0';
+		next = stop + 1;
+	}
+	return begin;
 }
 
-/**
- * _sttrtok - tokenize string
- * @p: string to tokenize
- * @delim: the delimitor
- * Return: Always a string
- */
-char *_sttrtok(char *p, const char *delim)
-{
-	static char *t;
-	static char *nt;
-	char *dp, *ct;
 
-	if (p != NULL)
+
+/**
+ *_realloc - allocate extra memory
+ *@ptr: void pointer
+ *@os: size
+ *@nsize: new size
+ *Return: Always new space
+ */
+void *_realloc(void *ptr, size_t os, size_t nsize)
+{
+	void *nptr;
+
+	if (ptr == NULL)
 	{
-		t = p;
-		nt = p;
+		return (malloc(nsize));
 	}
-	if (t == NULL)
+	if (nsize == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	nptr = malloc(nsize);
+
+	if (nptr == NULL)
 	{
 		return (NULL);
 	}
-	dp = _strpbrk(nt, delim);
-	if (dp != NULL)
+	if (nsize < os)
 	{
-		*dp = '\0';
-		ct = t;
-		t = dp + 1;
-		nt = t;
-		return (ct);
+		_memcpy(nptr, ptr, nsize);
 	}
-	else if (*t != '\0')
+	else
 	{
-		ct = t;
-		t = NULL;
-		return (ct);
+		_memcpy(nptr, ptr, os);
 	}
-	return (NULL);
+	free(ptr);
+	return (nptr);
 }
 
 /**
- * _getline - reads line from user
- * @line: pointer to store string
- * @len: the length
- * @fd: the buffer
- * Return: Always an int
+ * _getline - gets inputs from the cli
+ * @line: string input from the cli
+ * @len: len of string
+ * @fd: file descriptor
  */
 int _getline(char **line, size_t len, int fd)
 {
 	size_t i = 0;
-	size_t b = len;
-	char *buff = *line, *nb;
+	size_t buffer_size = len;
+	char *buff = *line;
 	int bufffer_allocated = 0;
+	char *nb;
 
 	if (line == NULL)
-	{
-		return (-1);
-	}
+		return -1;
+
 	if (buff == NULL)
 	{
 		bufffer_allocated = 1;
-		b = 128;
-		buff = malloc(sizeof(char *) * b);
+		buffer_size  = 128;
+		buff = malloc(sizeof(char *) * buffer_size);
 		if (buff == NULL)
+			return -1;
+	}
+ 	while (((read(fd, &buff[i], 1)) > 0) && buff[i] != '\n')
+	{
+		i++;
+		if (i > buffer_size -1)
 		{
-			return (-1);
-		}
-		while (((read(fd, &buff[i], 1)) > 0) && buff[i] != '\n')
-		{
-			i++;
-			if (i > b - 1)
+			nb = _realloc(buff, sizeof(char *) * buffer_size, sizeof(char *) * (buffer_size * 2));
+			if (nb == NULL)
 			{
-				nb = _realloc(buff, b * sizeof(char *), (b * 2) *  sizeof(char *));
-				if (nb == NULL)
-				{
-					free(nb);
-					return (-1);
-				}
-				buff = nb;
+				free(nb);
+				return -1;
 			}
-		}
-		buff[i] = '\0';
-		*line = buff;
-		if (bufffer_allocated == 1)
-		{
-			free(buff);
+			buff = nb;
 		}
 	}
+	buff[i] = '\0';
+	*line = buff;
+
+	if (bufffer_allocated == 1)
+	free(buff);
+
 	return (i);
 }
-
-
+/**
+ * _eprint_one_line - displays strings to std err
+ * @s: string to print
+ * Return: nothing
+ */
+void _eprint_one_line(const char *s)
+{
+	while (*s != '\0')
+	{
+		_eputchar(*s);
+		s++;
+	}
+}

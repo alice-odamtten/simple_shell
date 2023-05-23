@@ -59,13 +59,14 @@ void _memcpy(void *dest, const void *src, unsigned int n)
 {
 	char *srcptr = (char *)src;
 	char *destptr = (char *)dest;
+	unsigned int u = 0;
 
-	while (n > 0)
+	while (u < n)
 	{
-		destptr[n - 1] = srcptr[n - 1];
-		n--;
+		destptr[u] = srcptr[u];
+		u++;
 	}
-	destptr[n] = '\0';
+	destptr[u] = '\0';
 }
 
 /**
