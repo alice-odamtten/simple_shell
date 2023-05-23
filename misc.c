@@ -40,3 +40,13 @@ char **init_g_data(g_data *info, char **av, char **env, int c)
 
 	return (NULL);
 }
+
+/**
+ * is_shell_interactive - checks if shell is interactive
+ * Return: 1 or 0
+ */
+ssize_t is_shell_interactive(void)
+{
+	return (isatty(STDIN_FILENO));
+}
+
