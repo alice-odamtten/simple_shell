@@ -227,36 +227,39 @@ l_node *find_alias(g_data *info, int idx)
 	return (NULL);
 }
 
+/**
+ * perform_alias_insert - inserts an alias into the alias db
+ * @data: alias key
+ * @sd: alias value
+ * Returns: nothing 
+ */
 void perform_alias_insert(g_data *info, char **data, char **sd)
 {
-    l_node *tmp;
+	l_node *tmp;
 
-        tmp = info->alias_db;
-        if (tmp != NULL)
-        {
-            while (tmp != NULL)
-            {
-                if (_strcmp(*data, tmp->data) == 0)
-                {
-                        tmp->data = *data;
-                        tmp->sub_data = *sd ? *sd : "'\'\'";
-                        break;
-                }
-                else if(tmp->next == NULL)
-                {                    
-                    insert_at_end(&(info->alias_db), _strdup(*data), _strdup(*sd));
-                }
-               
-                tmp = tmp->next;
-            }
-        }
-        else
-        {
-            insert_at_end(&(info->alias_db), _strdup(*data), _strdup(*sd));
-        }
+	tmp = info->alias_db;
+	if (tmp != NULL)
+	{
+		while (tmp != NULL)
+		{
+			if (_strcmp(*data, tmp->data) == 0)
+			{
+				tmp->data = *data;
+				tmp->sub_data = *sd ? *sd : "'\'\'";
+				break;
+			}
+			else if(tmp->next == NULL)
+			{                    
+				insert_at_end(&(info->alias_db), _strdup(*data), _strdup(*sd));
+			}
 
-        // free(*data);
-        // free(*sd);
+			tmp = tmp->next;
+		}
+	}
+	else
+	{
+		insert_at_end(&(info->alias_db), _strdup(*data), _strdup(*sd));
+	}
 }
 
 int token_copier(g_data *info, char **token, int *idx)
