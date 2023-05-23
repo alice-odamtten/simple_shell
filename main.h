@@ -168,5 +168,5 @@ char *_strncpy(char *dest, char *src, int n);
 
 // 
 int process_non_interactive_commands(g_data *info);
-
+void *_realloc(void *ptr, size_t os, size_t nsize);
 #endif
