@@ -71,4 +71,42 @@ void process_interactive_commands(g_data *info)
 	}
 }
 
+/**
+ * process_file_commands - process file inputs
+ * @info: global data for state management
+ * @fd: file descriptor for inputs
+ * Return: 1 or 0
+ */
+int process_file_commands(g_data *info, int fd)
+{
+	char *line = NULL;
+	static size_t len;
+
+	info->readfd = fd;
+
+	if (fd == -1)
+	{
+		if (errno == EACCES)
+			exit(126);
+		if (errno == ENOENT)
+		{
+			_eprint_one_line(info->file_name);
+			_eprint_one_line(": 0: Can't open ");
+			_eprint_one_line(info->file);
+			exit(127);
+		}
+		return (EXIT_FAILURE);
+	}
+
+	while (_getline(&line, len, fd))
+	{
+		_strcpy(info->command, line);
+		_strcspn(info->command);
+		find_and_exec_cmd(info);
+	}
+
+	close(fd);
+	return (1);
+}
+
 
