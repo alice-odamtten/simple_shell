@@ -34,44 +34,47 @@ int unalias_func(g_data *info)
     return (1);
 }
 
+/**
+ * set_alias - sets an alias
+ * @info: global data struction for application state
+ * Return: 1 after every call
+ */
 int set_alias(g_data *info)
 {
-    int idx = 1, excess_count = 0;
-    char *token, *arg_check, *ensure_full_alias[100], *token_copy;
-    char **ptr;
+	int idx = 1, excess_count = 0;
+	char *token, *arg_check, *ensure_full_alias[100], *token_copy;
+	char **ptr;
 
-    while (idx <= info->number_of_args && info->arguments[idx] != NULL)
-    {
-     
-        if (contains_quotes(_strdup(info->arguments[idx])))
-        {
-           token_copier(info, &token, &idx);
-        }
-        else
-        {
-            if (is_valid_alias(info, info->arguments[idx]))
-                token =  _sttrtok(info->arguments[idx], "=");
-            else
-            {
-                idx++;
-                continue;
-            }
-               
-        }
+	while (idx <= info->number_of_args && info->arguments[idx] != NULL)
+	{
+		if (contains_quotes(_strdup(info->arguments[idx])))
+		{
+			token_copier(info, &token, &idx);
+		}
+		else
+		{
+			if (is_valid_alias(info, info->arguments[idx]))
+				token =  _sttrtok(info->arguments[idx], "=");
+			else
+			{
+				idx++;
+				continue;
+			}
+        	}
 
-        while (token != NULL)
-        {
-            ensure_full_alias[excess_count] = token;
-            excess_count++;
-            token= _sttrtok(NULL, " \t\n");
-        }
-        ensure_full_alias[excess_count] = NULL;
-        ptr = ensure_full_alias;
-        process_alias(info, &ptr, &excess_count);
-        excess_count = 0;
-        idx++;     
-    }
-    return (1);
+		while (token != NULL)
+		{
+			ensure_full_alias[excess_count] = token;
+			excess_count++;
+			token= _sttrtok(NULL, " \t\n");
+		}
+		ensure_full_alias[excess_count] = NULL;
+		ptr = ensure_full_alias;
+		process_alias(info, &ptr, &excess_count);
+		excess_count = 0;
+		idx++;     
+    	}
+	return (1);
 }
 
 void process_alias(g_data *info, char ***aliases, int *excess_count)
