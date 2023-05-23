@@ -9,33 +9,33 @@
 
 void insert_at_end(l_node **head, char *str, char *sub_data)
 {
-	l_node *temp, *new, *prev;
+	l_node *temp, *new_node, *prev;
 
 	if (!str)
 	{
 		return;
 	}
 
-	new = malloc(sizeof(l_node));
-	if (!new)
+	new_node = malloc(sizeof(l_node));
+	if (!new_node)
 	{
-		free(new);
+		free(new_node);
 		return;
 	}
-	new->data = _strdup(str);
-	new->sub_data = sub_data ? _strdup(sub_data) : "\'\'";
-	new->next = NULL;
+	new_node->data = _strdup(str);
+	new_node->sub_data = sub_data ? _strdup(sub_data) : "\'\'";
+	new_node->next = NULL;
 
-	if (!new->data)
+	if (!new_node->data)
 	{
-		free(new);
+		free(new_node);
 		return;
 	}
 
 	temp = *head;
 	if (*head == NULL)
 	{
-		*head = new;
+		*head = new_node;
 	}
 	else
 	{
@@ -45,27 +45,8 @@ void insert_at_end(l_node **head, char *str, char *sub_data)
 			temp = temp->next;
 		}
 
-		temp = new;
+		temp = new_node;
 		prev->next = temp;
 	}
 }
 
-/**
- * _insertatbegin - add node t the begining
- * @head: head node
- * Return: Always a struct
- */
-struct node *_insertatbegin(struct node *head)
-{
-	struct node *new;
-
-	/*
-	 * new = (struct node *)malloc(sizeof(struct node));
-	 * printf("Enter data:");
-	 * scanf("%d", &new->data);
-	 */
-
-	new->next = head;
-	head = new;
-	return (head);
-}

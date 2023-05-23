@@ -53,7 +53,7 @@ void parse_command(g_data *info)
 char *find_command_path(g_data *info, const char *command)
 {
 	char *path_env, *path_env_cpy, *path;
-	char *command_path[MAXIMUM_COMMAND_LENGTH];
+	char command_path[MAX_COMMAND_LENGTH];
 
 	path_env = _getenv("PATH", info->environ);
 	path_env_cpy = _strdup(path_env);
@@ -118,7 +118,7 @@ char *sanitize_string(char *str)
 char *sanitize_string2(char *str)
 {
 	int len = _strlen(str), j = 0, i;
-	char sanitized_str[MAXIMUM_COMMAND_LENGTH];
+	char sanitized_str[MAX_COMMAND_LENGTH];
 
 	for (i = 0; i < len; i++)
 	{

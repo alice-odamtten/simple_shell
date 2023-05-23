@@ -138,14 +138,12 @@ void process_alias(g_data *info, char ***aliases, int *excess_count)
 int free_alias(const char *str)
 {
 	char *temp;
-	int result;
+	int result = 1;
 
 	temp = _strchr(str, '=');
 
 	if (!temp)
 		return (1);
-
-	ptr = *temp;
 	*temp = 0;
 
 	return (result);

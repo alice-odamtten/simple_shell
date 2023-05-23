@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/*#include <stdio.h>*/
+#include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 
@@ -49,7 +49,7 @@ extern char **environ;
 
 /* parser.c */
 void parse_command(g_data *info);
-/*char* find_command_path(const char *command);*
+/*char* find_command_path(const char *command);*/
 
 int is_cmd(char *path);
 void cmd_handler(g_data *info, int c);
@@ -64,7 +64,7 @@ int cd_func(g_data *info);
 int alias_func(g_data *info);
 int help_func(g_data *info);
 int unalias_func(g_data *info);
-int builtin_setenv(const char *a, const char *e);
+int builtin_setenv(char *a, char *e);
 
 /* misc.d */
 char **init_g_data(g_data *info, char **av, char **env, int c);
@@ -117,7 +117,7 @@ ssize_t handle_builtins(g_data *info);
 
 /* setenv */
 int _existadd(char **env, char *buffer);
-int _setenv(const char *n, const char *val, int w);
+int _setenv(char *n, char *val, int w);
 int _envp(g_data *info);
 int _envp(__attribute__((unused)) g_data *info);
 int setenv_func(g_data *info);

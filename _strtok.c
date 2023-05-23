@@ -74,7 +74,7 @@ char *_sttrtok(char *p, const char *delim)
  */
 int _getline(char **line, size_t len, int fd)
 {
-	int i = 0;
+	size_t i = 0;
 	size_t b = len;
 	char *buff = *line, *nb;
 	int bufffer_allocated = 0;

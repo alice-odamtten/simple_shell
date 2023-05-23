@@ -52,7 +52,7 @@ int _unsetenv(g_data *info, char *var)
 	/* list_t *node = info->env;*/
 	size_t i = 0;
 	ssize_t p;
-	char **env_list;
+	char *env_list[MAX_COMMAND_LENGTH];
 
 	if (!var)
 	{
@@ -85,10 +85,10 @@ int _unsetenv(g_data *info, char *var)
  * @w: to overwrite or not
  * Return: always an int
  */
-int _setenv(const char *n, const char *val, int w)
+int _setenv(char *n, char *val, int w)
 {
 	char *buffer, **env = environ;
-	size_t nlen = strlen(n),  vallen = strlen(val), bufferLen;
+	size_t nlen = _strlen(n),  vallen = _strlen(val), bufferLen;
 
 	if (n == NULL || n[0] == '\0' || _strchr(n, '=') != NULL || val == NULL)
 	{
@@ -100,7 +100,7 @@ int _setenv(const char *n, const char *val, int w)
 	{
 		return (-1);
 	}
-	_strcpy(buffer, n);
+	_strcpy(buffer, _strdup(n));
 	_strcat(buffer, "=");
 	_strcat(buffer, val);
 	while (*env != NULL)
@@ -124,34 +124,4 @@ int _setenv(const char *n, const char *val, int w)
 	return (1);
 }
 
-/**
- * _existadd - environment to add
- * @env: environment varible
- * @buffer: variable to add
- * Return: Always an int
- */
-int _existadd(char **env, char *buffer)
-{
-	size_t elen = 0;
-	char **n;
-
-	if (*env == NULL)
-	{
-		while (environ[elen] != NULL)
-		{
-			elen++;
-		}
-		n = (char **) malloc((elen + 2) * sizeof(char *));
-		if (n == NULL)
-		{
-			free(buffer);
-			return (-1);
-		}
-		environ = n;
-		environ[elen] = buffer;
-		environ[elen + 1] = NULL;
-		free(n);
-	}
-	return (1);
-}
 

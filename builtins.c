@@ -120,7 +120,7 @@ int alias_func(g_data *info)
  * @info: globals and state management
  * Return: 1 or 0
  */
-int help_func(__attribute__((unsed)) g_data *info)
+int help_func(__attribute__((unused)) g_data *info)
 {
 	_puts("Simple Shell");
 	_puts("builtin commands avaiable are:");
@@ -138,7 +138,7 @@ int help_func(__attribute__((unsed)) g_data *info)
  * @e: value key of env
  * Return: 1 or 0
  */
-int builtin_setenv(const char *a, const char *e)
+int builtin_setenv(char *a, char *e)
 {
 	int i = 1;
 	char *ev;
