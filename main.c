@@ -109,4 +109,24 @@ int process_file_commands(g_data *info, int fd)
 	return (1);
 }
 
+/**
+ * process_non_interactive_commands - handles non interactive cmds
+ * @info: global data for state management
+ * Return: 1 or 0
+ */
+int process_non_interactive_commands(g_data *info)
+{
+	int ret = 0;
+
+	info->readfd = 0;
+
+	strcpy(info->command, sh_read_line(info));
+	fflush(stdin);
+
+	_strcspn(info->command);
+	ret = find_and_exec_cmd(info);
+
+	return (ret);
+}
+
 
