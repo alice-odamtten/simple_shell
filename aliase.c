@@ -150,14 +150,21 @@ int free_alias(const char *str)
 	return (result);
 }
 
-char* surround_with_quotes(char* str) {
-    size_t len = _strlen(str);
-    char* quoted_str = malloc(len + 3); // Allocate memory for the quoted string
+/**
+ * surround_with_quotes - surrounds a string with quotes
+ * @str: the string to add qoutes
+ * Return: a quouted string
+ */
+char* surround_with_quotes(char* str)
+{
+	size_t len = _strlen(str);
+	char* quoted_str = malloc(len + 3); // Allocate memory for the quoted string
 
-    if (quoted_str == NULL) {
-        _eputs("Error: Could not allocate memory for quoted string.");
-        return NULL;
-    }
+	if (quoted_str == NULL)
+	{
+		_eputs("Error: Could not allocate memory for quoted string.");
+		return NULL;
+	}
 
     // Add the opening quote
     quoted_str[0] = '\'';
