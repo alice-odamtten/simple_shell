@@ -75,7 +75,7 @@ char *_sttrtok(char *p, const char *delim)
 int _getline(char **line, size_t len, int fd)
 {
 	int i = 0;
-	size_t buffer_size = len;
+	size_t b = len;
 	char *buff = *line, *nb;
 	int bufffer_allocated = 0;
 
@@ -86,8 +86,8 @@ int _getline(char **line, size_t len, int fd)
 	if (buff == NULL)
 	{
 		bufffer_allocated = 1;
-		buffer_size  = 128;
-		buff = malloc(sizeof(char *) * buffer_size);
+		b = 128;
+		buff = malloc(sizeof(char *) * b);
 		if (buff == NULL)
 		{
 			return (-1);
@@ -95,9 +95,9 @@ int _getline(char **line, size_t len, int fd)
 		while (((read(fd, &buff[i], 1)) > 0) && buff[i] != '\n')
 		{
 			i++;
-			if (i > buffer_size - 1)
+			if (i > b - 1)
 			{
-				nb = realloc(buff, sizeof(char *) * (buffer_size * 2));
+				nb = _realloc(buff, b * sizeof(char *), (b * 2) *  sizeof(char *));
 				if (nb == NULL)
 				{
 					free(nb);
