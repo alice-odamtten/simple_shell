@@ -1,28 +1,53 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * _insertatend - add node at the end of a linked list
+ * insert_at_end - add node at the end of a linked list
  * @head: head node
- * Return: Always a node
+ * @str: the string to insert
+ * @sub_data: data
  */
 
-struct node *_insertatend(struct node *head)
+void insert_at_end(l_node **head, char *str, char *sub_data)
 {
-	struct node *temt, *new;
+	l_node *temp, *new, *prev;
 
-	/*
-	 * new = (struct node *)malloc(sizeof(struct node));
-	 * printf("Enter data:");
-	 * scanf("%d", &new->data);
-	 */
-
-	temt = head;
-	while (temt->next != NULL)
+	if (!str)
 	{
-		temt = temt->next;
+		return;
 	}
-	temt->next = new;
-	return (new);
+
+	new = malloc(sizeof(l_node));
+	if (!new)
+	{
+		free(new);
+		return;
+	}
+	new->data = _strdup(str);
+	new->sub_data = sub_data ? _strdup(sub_data) : "\'\'";
+	new->next = NULL;
+
+	if (!new->data)
+	{
+		free(new);
+		return;
+	}
+
+	temp = *head;
+	if (*head == NULL)
+	{
+		*head = new;
+	}
+	else
+	{
+		while (temp != NULL)
+		{
+			prev = temp;
+			temp = temp->next;
+		}
+
+		temp = new;
+		prev->next = temp;
+	}
 }
 
 /**

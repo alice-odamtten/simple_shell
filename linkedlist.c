@@ -1,4 +1,4 @@
-#include "shell"
+#include "main.h"
 
 /**
  * getlength - find length of linked list
@@ -21,18 +21,21 @@ int getlength(struct node  *key)
 }
 
 /**
- * _print - print linked list
+ * print_list - print linked list
  * @head: head node
  */
 
-void _print(struct node *head)
+void print_list(l_node *head)
 {
-	struct node *pointer = head;
+	l_node *ptr = head;
 
-	while (pointer != NULL)
+	if (head == NULL)
+		return;
+
+	while (ptr != NULL)
 	{
-		printf("node: %d\n", pointer->data);
-		pointer = pointer->next;
+		_puts(ptr->data);
+		ptr = ptr->next;
 	}
 }
 
@@ -78,4 +81,22 @@ struct node *_delete(struct node *head, int pos)
 	temp->next = new->next;
 	free(new);
 	return (temp);
+}
+
+/**
+ * freeList - frees linked list
+ * @head: head node
+ */
+void freeList(l_node **head)
+{
+	l_node *current = *head;
+	l_node *next;
+
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	*head = NULL;
 }
