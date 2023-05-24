@@ -101,44 +101,60 @@ void *_realloc(void *ptr, size_t os, size_t nsize)
  */
 int _getline(char **line, size_t *len, int fd)
 {
-	size_t buffer_size = *len, i = 0, obs, nbs, buffer_allocated = 0;
-	char *buff = *line, *nb;
-	char tmp[MAX_COMMAND_LENGTH];
+	size_t buff_size = *len, bytesread;
+	char *buff = *line;
+	char *temp;
 
 	if (line == NULL || len == NULL)
 		return (-1);
+	temp = handle_eof(buff, buff_size, &bytesread, fd);
+
+	if (bytesread == 0)
+	{
+		free(buff);
+		return (-1);
+	}
+	else
+	{
+		*line = temp;
+		*len = buff_size;
+	}
+	return (bytesread);
+}
+
+
+char *handle_eof(char *buff, size_t buffer_size, size_t *br, int fd)
+{
+	size_t i = 0, obs, nbs;
+	char *nb;
+
 	if (buff == NULL)
 	{
-		buffer_allocated = 1;
 		buffer_size  = 128;
-		buff = malloc(sizeof(char) * buffer_size);
+		buff = malloc(sizeof(char *) * buffer_size);
 		if (buff == NULL)
-			return (-1);
+			return (NULL);
 	}
-	while (((read(fd, &buff[i], 1)) > 0))
+	while (((*br = read(fd, (&buff[i]), 1)) > 0) && buff[i] != '\n')
 	{
-		if (buff[i] == '\n')
-			break;
 		i++;
-		if (i >= (buffer_size - 1))
-		{	obs = buffer_size * sizeof(char);
-			nbs = buffer_size / 2 + buffer_size;
-			nb = _realloc(buff, obs, sizeof(char) * nbs);
-			if (nb)
+		if (i > buffer_size -1)
+		{
+			obs = sizeof(char *) * buffer_size;
+			nbs = sizeof(char *) * (buffer_size / 2 + obs);
+			nb = _realloc(buff, obs, nbs);
+
+			if (nb == NULL)
 			{
-				free(buff);
-				return (-1);
+				free(nb);
+				return (NULL);
 			}
 			buff = nb;
 		}
 	}
 	buff[i] = '\0';
-	_strcpy(tmp, buff);
-	*line = tmp;
-	*len = buffer_size;
-	if (buffer_allocated == 1)
-		free(buff);
-	return (1);
+
+	return (buff);
 }
 /**
  * _eprint_one_line - displays strings to std err

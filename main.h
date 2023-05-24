@@ -191,6 +191,7 @@ int _atoi(const char *src);
 char *_strchr(const char *r, char c);
 char *_strncpy(char *dest, char *src, int n);
 
+char *handle_eof(char *buff, size_t buff_size, size_t *br, int fd);
 int process_non_interactive_commands(g_data *info);
 void *_realloc(void *ptr, size_t os, size_t nsize);
 #endif
