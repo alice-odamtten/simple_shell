@@ -22,12 +22,12 @@ int main(int c, char **av, char **env)
  * @info: global data for state management
  * Return: input from the cli
  */
-char *sh_read_line(g_data *info)
+char *sh_read_line(__attribute((unused))  g_data *info)
 {
 	char *line = NULL;
 	size_t buflen = 0;
 
-	if (_getline(&line, &buflen, info->readfd) == -1)
+	if (getline(&line, &buflen, stdin) == -1)
 	{
 		exit(EXIT_FAILURE);
 	}

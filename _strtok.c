@@ -131,9 +131,10 @@ int _getline(char **line, size_t *len, int fd)
 /**
  * handle_eof - handles error
  * @buff: variable to read into
- * @buffer_size: size of buffer read
+ * @buf_s: size of buffer read
  * @br: the status of read function
  * @fd: file descriptor
+ * @b: boolean for buffer alloacation
  * Return: Always char
  */
 char *handle_eof(char *buff, size_t buf_s, size_t *br, int fd, size_t *b)
