@@ -98,15 +98,11 @@ int process_file_commands(g_data *info, int fd)
 
 	if (fd == -1)
 	{
-		if (errno == EACCES)
-			exit(126);
-		if (errno == ENOENT)
-		{
-			_eprint_one_line(info->file_name);
-			_eprint_one_line(": 0: Can't open ");
-			_eprint_one_line(info->file);
-			exit(127);
-		}
+		_eprint_one_line(info->file_name);
+		_eprint_one_line(": 0: Can't open ");
+		_eprint_one_line(info->file);
+		exit(127);
+
 		return (EXIT_FAILURE);
 	}
 
@@ -131,7 +127,7 @@ int process_non_interactive_commands(g_data *info)
 	int ret = 0;
 	char *ptr = NULL;
 	size_t line = 0;
-	
+
 	info->readfd = 0;
 
 	while (getline(&ptr, &line, stdin) != -1)
@@ -141,7 +137,7 @@ int process_non_interactive_commands(g_data *info)
 	/*_strcspn(info->command);*/
 		ret = find_and_exec_cmd(info);
 	}
-	
+
 	if (ptr == NULL)
 		free(ptr);
 
