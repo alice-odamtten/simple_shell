@@ -59,6 +59,7 @@ void process_interactive_commands(g_data *info)
 		fflush(stdin);
 		if (linelen != -1)
 		{
+			rem_trail_spaces(ptr);
 			_strcpy(info->command, ptr);
 
 			/*_strcspin(info->command);*/
@@ -133,6 +134,7 @@ int process_non_interactive_commands(g_data *info)
 	if (getline(&ptr, &line, stdin) != -1)
 	{
 		fflush(stdin);
+		rem_trail_spaces(ptr);
 		_strcpy(info->command, ptr);
 		_strcspn(info->command);
 		ret = find_and_exec_cmd(info);

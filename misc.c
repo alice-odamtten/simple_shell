@@ -61,3 +61,25 @@ void free_all(g_data *info)
 	free(info->environ);
 	freeList(&(info->alias_db));
 }
+
+/**
+ * rem_trail_spaces - removes trailing spaces
+ * @str: the input string
+ */
+void rem_trail_spaces(char *str)
+{
+	int i, j;
+	int n = _strlen(str);
+
+	for (i = 0; i < n; i++)
+	{
+		if (str[i] != ' ')
+			break;
+	}
+
+	for (j = 0; i < n; i++, j++)
+	{
+		str[j] = str[i];
+	}
+	str[j] = '\0';
+}
