@@ -75,6 +75,7 @@ void process_interactive_commands(g_data *info)
 		else
 		{
 			ret = linelen;
+			_print_one_line("\n");
 			break;
 		}
 	}
