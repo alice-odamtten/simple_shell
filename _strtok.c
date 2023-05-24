@@ -11,20 +11,20 @@
  */
 char *_sttrtok(char str[], const char *delim)
 {
-	static char *next = NULL;
+	static char *next;
 	char *begin, *stop;
 
-	if (str != NULL) 
+	if (str != NULL)
 	{
 		next = str;
 	}
-	if (next == NULL) 
+	if (next == NULL)
 	{
-		return NULL;
+		return (NULL);
 	}
 
 	begin = next;
-	while (*begin != '\0' && (_strchr(delim, *begin) != NULL)) 
+	while (*begin != '\0' && (_strchr(delim, *begin) != NULL))
 	{
 		begin++;
 	}
@@ -32,7 +32,7 @@ char *_sttrtok(char str[], const char *delim)
 	if (*begin == '\0')
 	{
 		next = NULL;
-		return NULL;
+		return (NULL);
 	}
 	stop = begin + 1;
 	while (*stop != '\0' && (_strchr(delim, *stop) == NULL))
@@ -49,7 +49,7 @@ char *_sttrtok(char str[], const char *delim)
 		*stop = '\0';
 		next = stop + 1;
 	}
-	return begin;
+	return (begin);
 }
 
 
@@ -97,13 +97,14 @@ void *_realloc(void *ptr, size_t os, size_t nsize)
  * @line: string input from the cli
  * @len: len of string
  * @fd: file descriptor
+ * Return: 1 or 0 or Negative
  */
 int _getline(char **line, size_t *len, int fd)
 {
 	size_t buffer_size = *len, i = 0, obs, nbs;
 	char *buff = *line, *nb;
 	int buffer_allocated = 0;
-	
+
 	if (line == NULL || len == NULL)
 		return (-1);
 	if (buff == NULL)
@@ -114,14 +115,14 @@ int _getline(char **line, size_t *len, int fd)
 		if (buff == NULL)
 			return (-1);
 	}
- 	while (((read(fd, &buff[i], 1)) > 0))
+	while (((read(fd, &buff[i], 1)) > 0))
 	{
 		if (buff[i] == '\n')
 			break;
 		i++;
 		if (i >= (buffer_size - 1))
 		{	obs = buffer_size * sizeof(char);
-			nbs = buffer_size/2 + buffer_size;
+			nbs = buffer_size / 2 + buffer_size;
 			nb = _realloc(buff, obs, sizeof(char) * nbs);
 			if (nb)
 			{
@@ -135,7 +136,7 @@ int _getline(char **line, size_t *len, int fd)
 	buff[i] = '\0';
 	*line = _strdup(buff);
 	*len = buffer_size;
-	if (buffer_allocated == 1)	
+	if (buffer_allocated == 1)
 		free(buff);
 
 	return (1);

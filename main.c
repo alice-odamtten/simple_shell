@@ -49,7 +49,7 @@ void process_interactive_commands(g_data *info)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
-		
+
 		ptr = sh_read_line(info);
 		_strcpy(info->command, ptr);
 		fflush(stdin);
