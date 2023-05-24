@@ -50,11 +50,11 @@ void process_interactive_commands(g_data *info)
 
 	while (1)
 	{
-		write(STDOUT_FILENO, "$ ", 2);
-		fflush(stdout);
-
-		/*ptr = sh_read_line(info);*/
-		/*strcpy(info->command, ptr);*/
+		if (is_shell_interactive())
+		{
+			write(STDOUT_FILENO, "$ ", 2);
+			fflush(stdout);
+		}
 		linelen = getline(&ptr, &len, stdin);
 		fflush(stdin);
 		if (linelen != -1)
@@ -71,17 +71,14 @@ void process_interactive_commands(g_data *info)
 			ret = find_and_exec_cmd(info);
 
 			info->counter += 1;
-			ret = 1;
 		}
 		else
 		{
-			ret = linelen;
 			_print_one_line("\n");
 			exit(EXIT_SUCCESS);
 		}
 	}
 	free(ptr);
-	ret++;
 }
 
 /**
