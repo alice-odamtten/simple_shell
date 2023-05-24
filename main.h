@@ -18,30 +18,58 @@
 #define MAX_ARGUMENTS 128
 #define PATH_MAX 128
 
-
-typedef struct node {
-    char *data;
-    char *sub_data;
-    struct node *next;
+/**
+ * struct node - node for list data structure
+ * @data: value for node
+ * @sub_data: any other extra data available
+ * @next: pointer to next node
+ */
+typedef struct node
+{
+	char *data;
+	char *sub_data;
+	struct node *next;
 } l_node;
 
-typedef struct global_data {
-    char *file_name;
-    char command[MAX_COMMAND_LENGTH];
-    char *arguments[MAX_ARGUMENTS];
-    char **environ;
-    l_node *alias_db;
-    int number_of_args;
-    char *s_arg[MAX_ARGUMENTS];
-    int counter;
-    char *file;
-    int readfd;
-    int argc;
+/**
+ * struct global_data - holds globals variables
+ * @file_name: name of program file
+ * @command: holds input from cli
+ * @arguments: tokens from inputs
+ * @environ: environmental variables
+ * @alias_db: list for aliases
+ * @number_of_args: number of tokens
+ * @s_arg: hold tokens for inputs with semi colon
+ * @counter: a program  counter
+ * @file: file inputs
+ * @readfd: file descriptors
+ * @argc: number of inputs from cli
+ * Description: global data structure for variables
+ */
+typedef struct global_data
+{
+	char *file_name;
+	char command[MAX_COMMAND_LENGTH];
+	char *arguments[MAX_ARGUMENTS];
+	char **environ;
+	l_node *alias_db;
+	int number_of_args;
+	char *s_arg[MAX_ARGUMENTS];
+	int counter;
+	char *file;
+	int readfd;
+	int argc;
 } g_data;
 
-typedef struct builtins {
-    char *name;
-    int (*handler)(g_data *);
+/**
+ * struct builtins - holds list of builtins
+ * @name: name of builtin function
+ * @handler: function pointer
+ */
+typedef struct builtins
+{
+	char *name;
+	int (*handler)(g_data *);
 } csh_builtin;
 
 /* environ */
@@ -69,7 +97,7 @@ int builtin_setenv(char *a, char *e);
 /* misc.d */
 char **init_g_data(g_data *info, char **av, char **env, int c);
 void free_all(g_data *);
-ssize_t is_shell_interactive();
+ssize_t is_shell_interactive(void);
 int parseline(const char *cmdline, char **argv);
 int process_commands(g_data *info);
 void semi_colon_hanler(char *input, char *tokens, char **fcommand);
@@ -80,10 +108,10 @@ int _strncmp(const char *s, const char *t, size_t len);
 /*  string helpers */
 int _strlen(char *s);
 void _memcpy(void *dest, const void *src, unsigned int n);
-char* sanitize_string(char* str);
-char* sanitize_string2(char *str);
-char* surround_with_quotes(char* str);
-int contains_quotes(const char* str);
+char *sanitize_string(char *str);
+char *sanitize_string2(char *str);
+char *surround_with_quotes(char *str);
+int contains_quotes(const char *str);
 
 /* aliases.c */
 int set_alias(g_data *info);
@@ -108,7 +136,7 @@ void _eputs(const char *s);
 void _print_one_line(const char *s);
 
 /* parser.c */
-char *find_command_path(g_data *info, const char * command);
+char *find_command_path(g_data *info, const char *command);
 
 /* main */
 char *sh_read_line(g_data *info);
