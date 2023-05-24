@@ -25,12 +25,13 @@ int main(int c, char **av, char **env)
 char *sh_read_line(g_data *info)
 {
 	char *line = NULL;
-	static size_t buflen;
+	size_t buflen = 0;
 
-	if (_getline(&line, buflen, info->readfd) == -1)
+	if (_getline(&line, &buflen, info->readfd) == -1)
 	{
 		exit(EXIT_FAILURE);
 	}
+
 	return (line);
 }
 
@@ -42,13 +43,15 @@ char *sh_read_line(g_data *info)
 void process_interactive_commands(g_data *info)
 {
 	int ret = 1;
+	char *ptr = NULL;
 
 	while (ret == 1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
-
-		_strcpy(info->command, sh_read_line(info));
+		
+		ptr = sh_read_line(info);
+		_strcpy(info->command, ptr);
 		fflush(stdin);
 
 		_strcspn(info->command);
@@ -72,7 +75,7 @@ void process_interactive_commands(g_data *info)
 int process_file_commands(g_data *info, int fd)
 {
 	char *line = NULL;
-	static size_t len;
+	size_t len = 0;
 
 	info->readfd = fd;
 
@@ -90,7 +93,7 @@ int process_file_commands(g_data *info, int fd)
 		return (EXIT_FAILURE);
 	}
 
-	while (_getline(&line, len, fd))
+	while (_getline(&line, &len, fd))
 	{
 		_strcpy(info->command, line);
 		_strcspn(info->command);

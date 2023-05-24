@@ -151,7 +151,7 @@ void file_error(g_data *info);
 /* strtok.c */
 char *_strpbrk(const char *str, const char *set);
 char *_sttrtok(char *p, const char *delim);
-int _getline(char **line, size_t len, int fd);
+int _getline(char **line, size_t *len, int fd);
 
 /* error_ext.c */
 int process_file_commands(g_data *info, int fd);

@@ -77,7 +77,7 @@ char *find_command_path(g_data *info, const char *command)
 
 		path = _sttrtok(NULL, ":");
 	}
-	printf("i got here %s\n", path);
+
 	free(path_env_cpy);
 	return (NULL);
 }

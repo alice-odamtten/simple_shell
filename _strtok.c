@@ -98,46 +98,47 @@ void *_realloc(void *ptr, size_t os, size_t nsize)
  * @len: len of string
  * @fd: file descriptor
  */
-int _getline(char **line, size_t len, int fd)
+int _getline(char **line, size_t *len, int fd)
 {
-	size_t i = 0;
-	size_t buffer_size = len;
-	char *buff = *line;
-	int bufffer_allocated = 0;
-	char *nb;
-
-	if (line == NULL)
-		return -1;
-
+	size_t buffer_size = *len, i = 0, obs, nbs;
+	char *buff = *line, *nb;
+	int buffer_allocated = 0;
+	
+	if (line == NULL || len == NULL)
+		return (-1);
 	if (buff == NULL)
 	{
-		bufffer_allocated = 1;
+		buffer_allocated = 1;
 		buffer_size  = 128;
-		buff = malloc(sizeof(char *) * buffer_size);
+		buff = malloc(sizeof(char) * buffer_size);
 		if (buff == NULL)
-			return -1;
+			return (-1);
 	}
- 	while (((read(fd, &buff[i], 1)) > 0) && buff[i] != '\n')
+ 	while (((read(fd, &buff[i], 1)) > 0))
 	{
+		if (buff[i] == '\n')
+			break;
 		i++;
-		if (i > buffer_size -1)
-		{
-			nb = _realloc(buff, sizeof(char *) * buffer_size, sizeof(char *) * (buffer_size * 2));
-			if (nb == NULL)
+		if (i >= (buffer_size - 1))
+		{	obs = buffer_size * sizeof(char);
+			nbs = buffer_size/2 + buffer_size;
+			nb = _realloc(buff, obs, sizeof(char) * nbs);
+			if (nb)
 			{
-				free(nb);
-				return -1;
+				free(buff);
+				return (-1);
 			}
 			buff = nb;
 		}
+
 	}
 	buff[i] = '\0';
-	*line = buff;
+	*line = _strdup(buff);
+	*len = buffer_size;
+	if (buffer_allocated == 1)	
+		free(buff);
 
-	if (bufffer_allocated == 1)
-	free(buff);
-
-	return (i);
+	return (1);
 }
 /**
  * _eprint_one_line - displays strings to std err
