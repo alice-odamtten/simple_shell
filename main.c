@@ -48,7 +48,7 @@ void process_interactive_commands(g_data *info)
 	size_t len = 0;
 	int linelen;
 
-	while (ret == 1)
+	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
@@ -58,18 +58,28 @@ void process_interactive_commands(g_data *info)
 		linelen = getline(&ptr, &len, stdin);
 		fflush(stdin);
 		if (linelen != -1)
-		_strcpy(info->command, ptr);
-		/*_strcspn(info->command);*/
-		if (_strlen(info->command) == 0)
 		{
-			ret = 1;
-			continue;
-		}
-		ret = find_and_exec_cmd(info);
+			_strcpy(info->command, ptr);
 
-		info->counter += 1;
+			/*_strcspin(info->command);*/
+			if (_strlen(info->command) == 0)
+			{
+				ret = 1;
+				continue;
+			}
+			ret = find_and_exec_cmd(info);
+
+			info->counter += 1;
+			ret = 1;
+		}
+		else
+		{
+			ret = linelen;
+			break;
+		}
 	}
 	free(ptr);
+	ret++;
 }
 
 /**
