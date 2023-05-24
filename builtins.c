@@ -1,4 +1,4 @@
-i#include "main.h"
+#include "main.h"
 
 /**
  * exit_func - function to handle exits
