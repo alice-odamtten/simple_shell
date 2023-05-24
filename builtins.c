@@ -1,11 +1,11 @@
-#include "main.h"
+i#include "main.h"
 
 /**
  * exit_func - function to handle exits
  * @info: globals for state manaagements
  * Return: 1 or 0
  */
-int exit_func(g_data *info)
+int exit_func(g_data * info)
 {
 	char *u;
 	int status;
@@ -20,7 +20,8 @@ int exit_func(g_data *info)
 	else
 	{
 		/* exit(0) */
-		return (0);
+		/*return (0);*/
+		exit(EXIT_SUCCESS);
 	}
 	return (0);
 }
