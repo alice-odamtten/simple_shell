@@ -130,7 +130,7 @@ int process_non_interactive_commands(g_data *info)
 
 	info->readfd = 0;
 
-	while (getline(&ptr, &line, stdin) != -1)
+	if (getline(&ptr, &line, stdin) != -1)
 	{
 		fflush(stdin);
 		_strcpy(info->command, ptr);
@@ -143,5 +143,4 @@ int process_non_interactive_commands(g_data *info)
 
 	return (ret);
 }
-
 

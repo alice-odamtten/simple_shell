@@ -5,7 +5,7 @@
  * @info: globals for state manaagements
  * Return: 1 or 0
  */
-int exit_func(g_data * info)
+int exit_func(g_data *info)
 {
 	char *u;
 	int status;
