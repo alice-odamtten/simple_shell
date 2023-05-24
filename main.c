@@ -139,7 +139,10 @@ int process_non_interactive_commands(g_data *info)
 		_strcspn(info->command);
 		ret = find_and_exec_cmd(info);
 	}
-
+	else
+	{
+		exit(EXIT_SUCCESS);
+	}
 
 	free(ptr);
 
