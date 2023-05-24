@@ -45,15 +45,15 @@ char *_strcpy(char *dest, char *src)
 
 char *_strdup(char *s)
 {
-
 	size_t e = _strlen(s) + 1;
-	char *n = malloc(e);
-
-	if (n == NULL)
-	{
+	char *n = malloc((e + 1) * sizeof(char));
+	
+	if (s == NULL)
 		return (NULL);
-	}
-	_memcpy(n, s, e);
+	if (n == NULL)
+		return (NULL);
+	_strcpy(n, s);	
+
 	return (n);
 }
 
