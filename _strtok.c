@@ -101,9 +101,8 @@ void *_realloc(void *ptr, size_t os, size_t nsize)
  */
 int _getline(char **line, size_t *len, int fd)
 {
-	size_t buffer_size = *len, i = 0, obs, nbs;
+	size_t buffer_size = *len, i = 0, obs, nbs, buffer_allocated = 0;
 	char *buff = *line, *nb;
-	int buffer_allocated = 0;
 	char tmp[MAX_COMMAND_LENGTH];
 
 	if (line == NULL || len == NULL)
@@ -132,7 +131,6 @@ int _getline(char **line, size_t *len, int fd)
 			}
 			buff = nb;
 		}
-
 	}
 	buff[i] = '\0';
 	_strcpy(tmp, buff);
@@ -140,7 +138,6 @@ int _getline(char **line, size_t *len, int fd)
 	*len = buffer_size;
 	if (buffer_allocated == 1)
 		free(buff);
-
 	return (1);
 }
 /**
