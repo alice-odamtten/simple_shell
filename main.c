@@ -45,6 +45,8 @@ void process_interactive_commands(g_data *info)
 {
 	int ret = 1;
 	char *ptr = NULL;
+	size_t len = 0;
+	int linelen;
 
 	while (ret == 1)
 	{
@@ -53,9 +55,10 @@ void process_interactive_commands(g_data *info)
 
 		/*ptr = sh_read_line(info);*/
 		/*strcpy(info->command, ptr);*/
-		fgets(info->command, MAX_COMMAND_LENGTH, stdin);
+		linelen = getline(&ptr, &len, stdin);
 		fflush(stdin);
-
+		if (linelen != -1)
+		_strcpy(info->command, ptr);
 		/*_strcspn(info->command);*/
 		if (_strlen(info->command) == 0)
 		{
@@ -66,7 +69,7 @@ void process_interactive_commands(g_data *info)
 
 		info->counter += 1;
 	}
-	/*free(ptr);*/
+	free(ptr);
 }
 
 /**
