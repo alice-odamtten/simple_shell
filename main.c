@@ -65,10 +65,10 @@ void process_interactive_commands(g_data *info)
 			/*_strcspin(info->command);*/
 			if (_strlen(info->command) == 0)
 			{
-				ret = 1;
+				ret ++;
 				continue;
 			}
-			ret = find_and_exec_cmd(info);
+			find_and_exec_cmd(info);
 
 			info->counter += 1;
 		}
