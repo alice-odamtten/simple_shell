@@ -77,7 +77,7 @@ void process_interactive_commands(g_data *info)
 		{
 			ret = linelen;
 			_print_one_line("\n");
-			break;
+			exit(EXIT_SUCCESS);
 		}
 	}
 	free(ptr);
