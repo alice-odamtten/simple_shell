@@ -134,12 +134,12 @@ int process_non_interactive_commands(g_data *info)
 	{
 		fflush(stdin);
 		_strcpy(info->command, ptr);
-	/*_strcspn(info->command);*/
+		_strcspn(info->command);
 		ret = find_and_exec_cmd(info);
 	}
 
-	if (ptr == NULL)
-		free(ptr);
+
+	free(ptr);
 
 	return (ret);
 }
