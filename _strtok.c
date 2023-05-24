@@ -101,16 +101,17 @@ void *_realloc(void *ptr, size_t os, size_t nsize)
  */
 int _getline(char **line, size_t *len, int fd)
 {
-	size_t buff_size = *len, bytesread;
+	size_t buff_size = *len, bytesread, buf_al = 0;
 	char *buff = *line;
 	char *temp;
 
 	if (line == NULL || len == NULL)
 		return (-1);
-	temp = handle_eof(buff, buff_size, &bytesread, fd);
+	temp = handle_eof(buff, buff_size, &bytesread, fd, &buf_al);
 
 	if (bytesread == 0)
 	{
+		free(temp);
 		free(buff);
 		return (-1);
 	}
@@ -118,6 +119,11 @@ int _getline(char **line, size_t *len, int fd)
 	{
 		*line = temp;
 		*len = buff_size;
+		if (buf_al == 1)
+		{
+			free(temp);
+			free(buff);
+		}
 	}
 	return (bytesread);
 }
@@ -130,25 +136,26 @@ int _getline(char **line, size_t *len, int fd)
  * @fd: file descriptor
  * Return: Always char
  */
-char *handle_eof(char *buff, size_t buffer_size, size_t *br, int fd)
+char *handle_eof(char *buff, size_t buf_s, size_t *br, int fd, size_t *b)
 {
 	size_t i = 0, obs, nbs;
 	char *nb;
 
 	if (buff == NULL)
 	{
-		buffer_size  = 128;
-		buff = malloc(sizeof(char *) * buffer_size);
+		*b = 1;
+		buf_s  = 128;
+		buff = malloc(sizeof(char *) * buf_s);
 		if (buff == NULL)
 			return (NULL);
 	}
 	while (((*br = read(fd, (&buff[i]), 1)) > 0) && buff[i] != '\n')
 	{
 		i++;
-		if (i > buffer_size - 1)
+		if (i > buf_s - 1)
 		{
-			obs = sizeof(char *) * buffer_size;
-			nbs = sizeof(char *) * (buffer_size / 2 + obs);
+			obs = sizeof(char *) * buf_s;
+			nbs = sizeof(char *) * (buf_s / 2 + obs);
 			nb = _realloc(buff, obs, nbs);
 
 			if (nb == NULL)
