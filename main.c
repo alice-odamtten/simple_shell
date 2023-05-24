@@ -128,14 +128,21 @@ int process_file_commands(g_data *info, int fd)
 int process_non_interactive_commands(g_data *info)
 {
 	int ret = 0;
-
+	char *ptr = NULL;
+	size_t line = 0;
+	
 	info->readfd = 0;
 
-	_strcpy(info->command, sh_read_line(info));
-	fflush(stdin);
-
-	_strcspn(info->command);
-	ret = find_and_exec_cmd(info);
+	while (getline(&ptr, &line, stdin) != -1)
+	{
+		fflush(stdin);
+		_strcpy(info->command, ptr);
+	/*_strcspn(info->command);*/
+		ret = find_and_exec_cmd(info);
+	}
+	
+	if (ptr == NULL)
+		free(ptr);
 
 	return (ret);
 }
