@@ -122,7 +122,14 @@ int _getline(char **line, size_t *len, int fd)
 	return (bytesread);
 }
 
-
+/**
+ * handle_eof - handles error
+ * @buff: variable to read into
+ * @buffer_size: size of buffer read
+ * @br: the status of read function
+ * @fd: file descriptor
+ * Return: Always char
+ */
 char *handle_eof(char *buff, size_t buffer_size, size_t *br, int fd)
 {
 	size_t i = 0, obs, nbs;
@@ -138,7 +145,7 @@ char *handle_eof(char *buff, size_t buffer_size, size_t *br, int fd)
 	while (((*br = read(fd, (&buff[i]), 1)) > 0) && buff[i] != '\n')
 	{
 		i++;
-		if (i > buffer_size -1)
+		if (i > buffer_size - 1)
 		{
 			obs = sizeof(char *) * buffer_size;
 			nbs = sizeof(char *) * (buffer_size / 2 + obs);
