@@ -24,15 +24,16 @@ int main(int c, char **av, char **env)
  */
 char *sh_read_line(__attribute((unused))  g_data *info)
 {
-	char *line = NULL;
-	size_t buflen = 0;
+	/**
+	 * char *line = NULL;
+	*size_t buflen = 0;
+	*
+	*if (getline(&line, &buflen, stdin) == -1)
+	*{
+	*	exit(EXIT_FAILURE);
+	*}*/
 
-	if (getline(&line, &buflen, stdin) == -1)
-	{
-		exit(EXIT_FAILURE);
-	}
-
-	return (line);
+	return (NULL);
 }
 
 /**
@@ -50,11 +51,12 @@ void process_interactive_commands(g_data *info)
 		write(STDOUT_FILENO, "$ ", 2);
 		fflush(stdout);
 
-		ptr = sh_read_line(info);
-		_strcpy(info->command, ptr);
+		/*ptr = sh_read_line(info);
+		*strcpy(info->command, ptr);*/
+		fgets(info->command, MAX_COMMAND_LENGTH, stdin);
 		fflush(stdin);
 
-		_strcspn(info->command);
+		/*_strcspn(info->command);*/
 		if (_strlen(info->command) == 0)
 		{
 			ret = 1;
@@ -64,6 +66,7 @@ void process_interactive_commands(g_data *info)
 
 		info->counter += 1;
 	}
+	/*free(ptr);*/
 }
 
 /**
