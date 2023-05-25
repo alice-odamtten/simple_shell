@@ -19,9 +19,10 @@ int exit_func(g_data *info)
 	}
 	else
 	{
-		/* exit(0) */
+		free(info->command);
+		exit(0);
 		/*return (0);*/
-		exit(EXIT_SUCCESS);
+		/*exit(EXIT_SUCCESS);*/
 	}
 	return (0);
 }

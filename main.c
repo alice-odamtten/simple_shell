@@ -43,7 +43,7 @@ char *sh_read_line(__attribute((unused))  g_data *info)
 void process_interactive_commands(g_data *info)
 {
 	int ret = 1;
-	char *ptr = NULL;
+	/*char *ptr = NULL;*/
 	size_t len = 0;
 	int linelen;
 
@@ -54,12 +54,12 @@ void process_interactive_commands(g_data *info)
 			write(STDOUT_FILENO, "$ ", 2);
 			fflush(stdout);
 		}
-		linelen = getline(&ptr, &len, stdin);
+		linelen = getline(&(info->command), &len, stdin);
 		fflush(stdin);
 		if (linelen != -1)
 		{
-			rem_trail_spaces(ptr);
-			_strcpy(info->command, ptr);
+			rem_trail_spaces(info->command);
+			/*_strcpy(info->command, ptr);*/
 
 			/*_strcspin(info->command);*/
 			if (_strlen(info->command) == 0)
@@ -76,7 +76,7 @@ void process_interactive_commands(g_data *info)
 		{
 			if (is_shell_interactive())
 				_print_one_line("\n");
-			free(ptr);
+			free(info->command);
 			exit(0);
 		}
 	}

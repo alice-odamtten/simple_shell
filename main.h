@@ -47,7 +47,7 @@ typedef struct node
 typedef struct global_data
 {
 	char *file_name;
-	char command[MAX_COMMAND_LENGTH];
+	char *command;
 	char *arguments[MAX_ARGUMENTS];
 	l_node *alias_db;
 	int number_of_args;
