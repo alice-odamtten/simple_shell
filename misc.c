@@ -74,7 +74,7 @@ char *command_failure_err(g_data *info)
 	int length;
 	char *error;
 
-	length = _strlen(info->file_name) + _strlen(ver_str);
+	length = _strlen(info->file_name);
 	length += _strlen(info->arguments[0]) + _strlen(info->arguments[1]) + 23;
 	error = malloc(sizeof(char) * (length + 1));
 	if (error == 0)
