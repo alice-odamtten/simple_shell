@@ -126,7 +126,8 @@ int path_finder(g_data *info)
 	{
 		if (info->arguments[0])
 		{
-			if (info->arguments[0][0] == '/' && is_cmd(info->arguments[0]) == 1)
+			if ((info->arguments[0][0] == '/' || info->arguments[0][0] == '.')
+					&& is_cmd(info->arguments[0]) == 1)
 			{
 				ret = exec_cmd(info, info->arguments[0]);
 				free(commandPath);
