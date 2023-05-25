@@ -1,2 +1,3 @@
 *.swp
 valgrind-out.txt
+alx-test-suite/

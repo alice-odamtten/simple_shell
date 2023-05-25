@@ -65,7 +65,7 @@ void process_interactive_commands(g_data *info)
 			/*_strcspin(info->command);*/
 			if (_strlen(info->command) == 0)
 			{
-				ret ++;
+				ret++;
 				continue;
 			}
 			find_and_exec_cmd(info);
@@ -74,7 +74,8 @@ void process_interactive_commands(g_data *info)
 		}
 		else
 		{
-			_print_one_line("\n");
+			if (is_shell_interactive())
+				_print_one_line("\n");
 			exit(EXIT_SUCCESS);
 		}
 	}
