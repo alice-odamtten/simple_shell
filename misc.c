@@ -18,6 +18,7 @@ void init_g_data(g_data *info, char **av, int c)
 	info->argc = c;
 	info->alias_db = NULL;
 	info->command = NULL;
+	info->status = 0;
 }
 
 /**

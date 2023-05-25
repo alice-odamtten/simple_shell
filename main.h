@@ -42,6 +42,7 @@ typedef struct node
  * @file: file inputs
  * @readfd: file descriptors
  * @argc: number of inputs from cli
+ * @status: checks yhe status
  * Description: global data structure for variables
  */
 typedef struct global_data
@@ -56,6 +57,7 @@ typedef struct global_data
 	char *file;
 	int readfd;
 	int argc;
+	int status;
 } g_data;
 
 /**

@@ -8,7 +8,6 @@
  */
 ssize_t exec_cmd(g_data *info, char *path)
 {
-	int status;
 	const int pid = fork();
 
 	if (pid == -1)
@@ -24,12 +23,12 @@ ssize_t exec_cmd(g_data *info, char *path)
 	}
 	else
 	{
-		if (waitpid(pid, &status, WUNTRACED)  == -1)
+		if (waitpid(pid, &(info->status), WUNTRACED)  == -1)
 		{
 			perror("wait");
 			exit(EXIT_FAILURE);
 		}
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		if (WIFEXITED(info->status) && WEXITSTATUS(info->status) != 0)
 		{
 			exit(EXIT_FAILURE);
 		}

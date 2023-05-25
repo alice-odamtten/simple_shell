@@ -20,7 +20,7 @@ int exit_func(g_data *info)
 	else
 	{
 		free(info->command);
-		exit(0);
+		exit(info->status);
 		/*return (0);*/
 		/*exit(EXIT_SUCCESS);*/
 	}
