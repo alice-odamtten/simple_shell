@@ -176,3 +176,33 @@ char *get_cd_error(g_data *info)
 
 	return (error);
 }
+
+/**
+ * exit_shell_err - generic error message for exit in get_exit
+ * @info: data relevant (counter, arguments)
+ * Return: Error message
+ */
+char *command_exit_shell_err(g_data *info)
+{
+        int length;
+        char *error;
+
+        length = _strlen(info->file_name) + _strlen(ver_str);
+        length += _strlen(info->arguments[0]) + _strlen(info->arguments[1]) + 23;
+        error = malloc(sizeof(char) * (length + 1));
+        if (error == 0)
+        {
+                return (NULL);
+        }
+        _strcpy(error, info->file_name);
+        _strcat(error, ": ");
+        _strcat(error, " can not access");
+	_strcat(error, " \'");
+        _strcat(error, info->command);
+	_strcat(error, "\'");
+        _strcat(error, ": No such file or directory");
+        _strcat(error, "\n\0");
+        free(ver_str);
+
+        return (error);
+}
