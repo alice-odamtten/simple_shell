@@ -19,18 +19,18 @@ ssize_t exec_cmd(g_data *info, char *path)
 	{
 		execve(path, info->arguments, environ);
 		perror(info->file_name);
-		exit(EXIT_FAILURE);
+		exit(info->counter);
 	}
 	else
 	{
 		if (waitpid(pid, &(info->status), WUNTRACED)  == -1)
 		{
 			perror("wait");
-			exit(EXIT_FAILURE);
+			exit(info->counter);
 		}
 		if (WIFEXITED(info->status) && WEXITSTATUS(info->status) != 0)
 		{
-			exit(EXIT_FAILURE);
+			exit(info->counter);
 		}
 	}
 
