@@ -35,7 +35,6 @@ typedef struct node
  * @file_name: name of program file
  * @command: holds input from cli
  * @arguments: tokens from inputs
- * @environ: environmental variables
  * @alias_db: list for aliases
  * @number_of_args: number of tokens
  * @s_arg: hold tokens for inputs with semi colon

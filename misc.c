@@ -4,7 +4,6 @@
  * init_g_data - initialize global data
  * @info: globals from header
  * @av: cli arguments
- * @env: environmental variables
  * @c: number of cli arguments
  * Return: nothing just null
  */
