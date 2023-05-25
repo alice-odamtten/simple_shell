@@ -1,3 +1,9 @@
 *.swp
 valgrind-out.txt
 alx-test-suite/
+*.swj
+*.swk
+*.swm
+*.swn
+*.swo
+*.swl
