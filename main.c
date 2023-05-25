@@ -4,7 +4,6 @@
  * main - entry point
  * @c:  number of cli arguments
  * @av: an array of cli arguments
- * @env: environment variables
  * Return: 1
  */
 int main(int c, char **av)

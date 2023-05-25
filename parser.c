@@ -45,8 +45,7 @@ void parse_command(g_data *info)
 }
 
 /**
- * find_command_path - find path for command
- * @info: globals and state managements
+ * find_command_path - find path for command§
  * @command: input command
  * Return: command path
  */
