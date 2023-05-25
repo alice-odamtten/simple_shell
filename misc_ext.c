@@ -16,16 +16,19 @@ int error_handler(g_data *info, int err_val)
 			er_str = env_err(info);
 			break;
 		case 2:
-			if (_strcmp("exit", info->arguments[0]) == 0)
-				er_str = exit_shell_err(info);
-			else
-				er_str = get_cd_error(info);
+			er_str = exit_shell_err(info);
+			break;
+		case 3:
+			er_str = get_cd_error(info);
 			break;
 		case 126:
 			er_str = path_126_err(info);
 			break;
 		case 127:
 			er_str = not_found_err(info);
+			break;
+		default:
+			er_str = command_failure_err(info);
 	}
 
 	if (er_str)

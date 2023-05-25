@@ -13,8 +13,15 @@ int exit_func(g_data *info)
 	if (info->arguments[1] != NULL)
 	{
 		/* Todo: check if is a valid digit */
-		u = _sttrtok(info->arguments[1] + 4, " ");
+		u = _sttrtok(info->arguments[1], " ");
+
 		status = _atoi(u);
+		free(info->command);
+		if (status < 1)
+		{
+			error_handler(info, 2);
+			exit(2);
+		}
 		exit(status);
 	}
 	else

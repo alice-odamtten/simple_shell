@@ -113,8 +113,8 @@ char *not_found_err(g_data *info)
 char *exit_shell_err(g_data *info)
 {
 	int length;
-	char *error;
-	char *ver_str;
+	char *error, *ver_str;
+
 
 	ver_str = atoi_rev(info->counter);
 	length = _strlen(info->file_name) + _strlen(ver_str);
@@ -125,12 +125,12 @@ char *exit_shell_err(g_data *info)
 		free(ver_str);
 		return (NULL);
 	}
+	printf("%s\n", info->arguments[0]);
 	_strcpy(error, info->file_name);
 	_strcat(error, ": ");
 	_strcat(error, ver_str);
 	_strcat(error, ": ");
-	_strcat(error, info->arguments[0]);
-	_strcat(error, ": Illegal number: ");
+	_strcat(error, "exit: Illegal number: ");
 	_strcat(error, info->arguments[1]);
 	_strcat(error, "\n\0");
 	free(ver_str);

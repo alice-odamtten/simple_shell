@@ -10,23 +10,22 @@ int _atoi(const char *src)
 {
 	int n = 0;
 	int s = 1;
-	const char *p = src;
 
-	while (*p == ' ' || *p == '\n' || *p == '\f')
+	while (*src == ' ' || *src == '\n' || *src == '\f')
 	{
-		p++;
+		src++;
 	}
-	if (*p == '-')
+
+	if (*src == '-')
 	{
 		s = -1;
-		p++;
+		src++;
 	}
-	else if (*p >= '0' && *p <= '9')
+	while (*src >= '0' && *src <= '9')
 	{
-		n = n * 10 + (*p - '0');
-		p++;
+		n = n * 10 + (*src - '0');
+		src++;
 	}
-
 	return (n * s);
 }
 

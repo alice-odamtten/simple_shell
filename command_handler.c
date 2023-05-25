@@ -19,7 +19,7 @@ ssize_t exec_cmd(g_data *info, char *path)
 	{
 		execve(path, info->arguments, environ);
 		perror(info->file_name);
-		exit(2);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

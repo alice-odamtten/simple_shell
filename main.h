@@ -194,4 +194,9 @@ char *handle_eof(char *buff, size_t b, size_t *br, int fd, size_t *);
 int process_non_interactive_commands(g_data *info);
 void rem_trail_spaces(char *str);
 void *_realloc(void *ptr, size_t os, size_t nsize);
+
+char *command_failure_err(g_data *info);
+void print_exit_err(g_data *info);
+void write_digits(size_t number);
+
 #endif
