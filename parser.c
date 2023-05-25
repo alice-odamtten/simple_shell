@@ -50,12 +50,12 @@ void parse_command(g_data *info)
  * @command: input command
  * Return: command path
  */
-char *find_command_path(g_data *info, const char *command)
+char *find_command_path(const char *command)
 {
 	char *path_env, *path_env_cpy, *path;
 	char command_path[MAX_COMMAND_LENGTH];
 
-	path_env = _getenv("PATH", info->environ);
+	path_env = _getenv("PATH", environ);
 	path_env_cpy = _strdup(path_env);
 
 	path = _sttrtok(path_env_cpy, ":");

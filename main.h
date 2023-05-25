@@ -50,7 +50,6 @@ typedef struct global_data
 	char *file_name;
 	char command[MAX_COMMAND_LENGTH];
 	char *arguments[MAX_ARGUMENTS];
-	char **environ;
 	l_node *alias_db;
 	int number_of_args;
 	char *s_arg[MAX_ARGUMENTS];
@@ -94,7 +93,7 @@ int unalias_func(g_data *info);
 int builtin_setenv(char *a, char *e);
 
 /* misc.d */
-char **init_g_data(g_data *info, char **av, char **env, int c);
+void init_g_data(g_data *info, char **av, int c);
 void free_all(g_data *);
 ssize_t is_shell_interactive(void);
 int parseline(const char *cmdline, char **argv);
@@ -135,7 +134,7 @@ void _eputs(const char *s);
 void _print_one_line(const char *s);
 
 /* parser.c */
-char *find_command_path(g_data *info, const char *command);
+char *find_command_path(const char *command);
 
 /* main */
 char *sh_read_line(g_data *info);

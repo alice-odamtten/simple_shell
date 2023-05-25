@@ -37,7 +37,7 @@ int cd_func(g_data *info)
 
 	if (info->arguments[1] == NULL)
 	{
-		d = _getenv("HOME", info->environ);
+		d = _getenv("HOME", environ);
 		if (d == NULL)
 		{
 			perror("cd");
@@ -46,7 +46,7 @@ int cd_func(g_data *info)
 	}
 	else if (_strcmp(info->arguments[1], "-") == 0)
 	{
-		d = _getenv("OLDPWD", info->environ);
+		d = _getenv("OLDPWD", environ);
 		if (d == NULL)
 		{
 			perror("cd");
@@ -57,7 +57,7 @@ int cd_func(g_data *info)
 	{
 		n = malloc(PATH_MAX);
 		getcwd(n, PATH_MAX);
-		_setenv("OLDPWD", n, 1);
+		setenv("OLDPWD", n, 1);
 		free(n);
 		if (chdir(info->arguments[1]))
 		{
@@ -66,7 +66,7 @@ int cd_func(g_data *info)
 		}
 		c = malloc(PATH_MAX + 5);
 		getcwd(c, PATH_MAX);
-		_setenv("PWD", c, 1);
+		setenv("PWD", c, 1);
 		free(c);
 	}
 
@@ -159,7 +159,7 @@ int builtin_setenv(char *a, char *e)
 		i = 0;
 	}
 
-	if (_setenv(a, e, i) != 0)
+	if (setenv(a, e, i) != 0)
 	{
 		perror("setenv");
 		return (-1);

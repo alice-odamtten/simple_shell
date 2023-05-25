@@ -8,9 +8,8 @@
  * @c: number of cli arguments
  * Return: nothing just null
  */
-char **init_g_data(g_data *info, char **av, char **env, int c)
+void init_g_data(g_data *info, char **av, int c)
 {
-	int idx;
 
 	info->file_name = av[0];
 	info->file = av[1];
@@ -19,26 +18,6 @@ char **init_g_data(g_data *info, char **av, char **env, int c)
 	info->readfd = 0;
 	info->argc = c;
 	info->alias_db = NULL;
-
-	for (idx = 0; env[idx]; idx++)
-		;
-
-	info->environ = malloc(sizeof(char *) * (idx + 1));
-	if (info->environ == NULL)
-	{
-		_puts("failed to initialize envs");
-		exit(0);
-	}
-
-	idx = 0;
-	while (env[idx] != NULL)
-	{
-		info->environ[idx] = env[idx];
-		idx++;
-	}
-	info->environ[idx] = NULL;
-
-	return (NULL);
 }
 
 /**
@@ -58,7 +37,7 @@ ssize_t is_shell_interactive(void)
 void free_all(g_data *info)
 {
 
-	free(info->environ);
+	/*free(info->environ);*/
 	freeList(&(info->alias_db));
 }
 

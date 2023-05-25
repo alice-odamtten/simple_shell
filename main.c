@@ -7,11 +7,11 @@
  * @env: environment variables
  * Return: 1
  */
-int main(int c, char **av, char **env)
+int main(int c, char **av)
 {
 	g_data info;
 
-	init_g_data(&info, av, env, c);
+	init_g_data(&info, av, c);
 	cmd_handler(&info, c);
 
 	return (1);
@@ -59,7 +59,7 @@ void process_interactive_commands(g_data *info)
 		fflush(stdin);
 		if (linelen != -1)
 		{
-			rem_trail_spaces(ptr);
+			/*rem_trail_spaces(ptr);*/
 			_strcpy(info->command, ptr);
 
 			/*_strcspin(info->command);*/
@@ -71,15 +71,16 @@ void process_interactive_commands(g_data *info)
 			find_and_exec_cmd(info);
 
 			info->counter += 1;
+			/*free(ptr);*/
 		}
 		else
 		{
 			if (is_shell_interactive())
 				_print_one_line("\n");
-			exit(EXIT_SUCCESS);
+			free(ptr);
+			exit(0);
 		}
 	}
-	free(ptr);
 }
 
 /**

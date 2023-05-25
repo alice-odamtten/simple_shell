@@ -18,7 +18,7 @@ ssize_t exec_cmd(g_data *info, char *path)
 	}
 	else if (pid == 0)
 	{
-		execve(path, info->arguments, info->environ);
+		execve(path, info->arguments, environ);
 		perror(info->file_name);
 		exit(EXIT_FAILURE);
 	}
@@ -115,7 +115,7 @@ int is_cmd(char *path)
 int path_finder(g_data *info)
 {
 	int ret = 0;
-	char *commandPath = find_command_path(info, info->command);
+	char *commandPath = find_command_path(info->command);
 
 	if (commandPath != NULL)
 	{
@@ -127,7 +127,7 @@ int path_finder(g_data *info)
 		if (info->arguments[0])
 		{
 			if ((info->arguments[0][0] == '/' || info->arguments[0][0] == '.')
-					|| is_cmd(info->arguments[0]) == 1 || _getenv("PATH", info->environ))
+					|| is_cmd(info->arguments[0]) == 1 || _getenv("PATH", environ))
 			{
 				ret = exec_cmd(info, info->arguments[0]);
 				free(commandPath);
