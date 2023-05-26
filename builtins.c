@@ -136,7 +136,7 @@ int help_func(__attribute__((unused)) g_data *info)
 /**
  * is_executable - determines if is an executable
  *
- * @datash: data structure
+ * @info: data structure
  * Return: 0 if is not an executable, other number if it does
  */
 int is_executable(g_data *info)

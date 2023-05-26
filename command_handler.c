@@ -125,16 +125,18 @@ int path_finder(g_data *info)
 {
 	int ret = 0, isexec;
 	char *commandPath;
-       
+
 	isexec = is_executable(info);
 	if (isexec == -1)
 		return (1);
-	/*if (isexec == 0)
-	{
-		commandPath = find_command_path(info->command);
-		if (check_err_cmd(commandPath, info) == 1)
-			return (1);
-	}*/
+	/**
+	* if (isexec == 0)
+	*{
+	*	commandPath = find_command_path(info->command);
+	*	if (check_err_cmd(commandPath, info) == 1)
+	*		return (1);
+	*}
+	*/
 	commandPath = find_command_path(info->command);
 	if (commandPath != NULL)
 	{
