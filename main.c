@@ -67,7 +67,7 @@ void process_interactive_commands(g_data *info)
 				ret++;
 				continue;
 			}
-			find_and_exec_cmd(info);
+			ret = find_and_exec_cmd(info);
 
 			info->counter += 1;
 			/*free(ptr);*/

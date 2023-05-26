@@ -125,7 +125,7 @@ char *exit_shell_err(g_data *info)
 		free(ver_str);
 		return (NULL);
 	}
-	printf("%s\n", info->arguments[0]);
+
 	_strcpy(error, info->file_name);
 	_strcat(error, ": ");
 	_strcat(error, ver_str);

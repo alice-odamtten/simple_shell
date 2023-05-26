@@ -17,19 +17,17 @@ int exit_func(g_data *info)
 
 		status = _atoi(u);
 		len = _strlen(info->arguments[1]);
-		free(info->command);
+
 		if (len > 10 || status < 1 || status > (unsigned int)INT_MAX)
 		{
 			error_handler(info, 2);
-			exit(2);
+			info->status = 2;
+			return (0);
 		}
-		exit(status);
+
+		info->status = status % 256;
 	}
-	else
-	{
-		free(info->command);
-		exit(info->status);
-	}
+
 	return (0);
 }
 
@@ -71,7 +69,7 @@ int cd_func(g_data *info)
 	}
 
 	cd_to(info);
-
+	free(info->command);
 	return (1);
 }
 
@@ -135,38 +133,4 @@ int help_func(__attribute__((unused)) g_data *info)
 	return (1);
 }
 
-/**
- * builtin_setenv - handles variable settitng
- * @a: variable to set
- * @e: value key of env
- * Return: 1 or 0
- */
-int builtin_setenv(char *a, char *e)
-{
-	int i = 1;
-	char *ev;
-
-	if (a == NULL || e == NULL)
-	{
-		perror("setenv");
-		return (-1);
-	}
-	ev = getenv(a);
-	if (ev != NULL)
-	{
-		i = 1;
-	}
-	else
-	{
-		i = 0;
-	}
-
-	if (setenv(a, e, i) != 0)
-	{
-		perror("setenv");
-		return (-1);
-	}
-
-	return (0);
-}
 

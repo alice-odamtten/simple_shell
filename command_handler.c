@@ -10,6 +10,7 @@ ssize_t exec_cmd(g_data *info, char *path)
 {
 	const int pid = fork();
 
+
 	if (pid == -1)
 	{
 		perror("fork");
@@ -17,7 +18,10 @@ ssize_t exec_cmd(g_data *info, char *path)
 	}
 	else if (pid == 0)
 	{
-		execve(path, info->arguments, environ);
+		if(execve(path, info->arguments, environ))
+		{	
+			free(info->command);
+		}
 		perror(info->file_name);
 		exit(EXIT_FAILURE);
 	}
@@ -30,7 +34,8 @@ ssize_t exec_cmd(g_data *info, char *path)
 		}
 		if (WIFEXITED(info->status) && WEXITSTATUS(info->status) != 0)
 		{
-			exit(2);
+			info->status = 2;
+			return (0);
 		}
 	}
 
@@ -82,6 +87,11 @@ int find_and_exec_cmd(g_data *info)
 	if (ret == -1)
 	{
 		ret = path_finder(info);
+	}
+	if (ret == 0)
+	{
+		free_all(info);
+		exit(info->status);
 	}
 	return (ret);
 }
