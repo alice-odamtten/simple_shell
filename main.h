@@ -9,13 +9,13 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-
+#include <limits.h>
 /*stat */
 #include <sys/stat.h>
 
 #define MAX_COMMAND_LENGTH 1024
 #define MAX_ARGUMENTS 128
-#define PATH_MAX 128
+
 
 /**
  * struct node - node for list data structure
@@ -198,5 +198,12 @@ void *_realloc(void *ptr, size_t os, size_t nsize);
 char *command_failure_err(g_data *info);
 void print_exit_err(g_data *info);
 void write_digits(size_t number);
+
+
+void cd_dot(g_data *datash);
+void cd_to(g_data *datash);
+void cd_previous(g_data *datash);
+void cd_to_home(g_data *datash);
+void rev_string(char *s);
 
 #endif

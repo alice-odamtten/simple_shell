@@ -8,7 +8,7 @@
 int exit_func(g_data *info)
 {
 	char *u;
-	int status;
+	size_t status, len;
 
 	if (info->arguments[1] != NULL)
 	{
@@ -16,8 +16,9 @@ int exit_func(g_data *info)
 		u = _sttrtok(info->arguments[1], " ");
 
 		status = _atoi(u);
+		len = _strlen(info->arguments[1]);
 		free(info->command);
-		if (status < 1)
+		if (len > 10 || status < 1 || status > (unsigned int)INT_MAX)
 		{
 			error_handler(info, 2);
 			exit(2);
@@ -28,8 +29,6 @@ int exit_func(g_data *info)
 	{
 		free(info->command);
 		exit(info->status);
-		/*return (0);*/
-		/*exit(EXIT_SUCCESS);*/
 	}
 	return (0);
 }
@@ -41,42 +40,37 @@ int exit_func(g_data *info)
  */
 int cd_func(g_data *info)
 {
-	char *d, *n, *c;
+	char *dir;
+	int ishome, ishome2, isddash;
 
-	if (info->arguments[1] == NULL)
+	dir = info->arguments[1];
+
+	if (dir != NULL)
 	{
-		d = _getenv("HOME", environ);
-		if (d == NULL)
-		{
-			perror("cd");
-			return (-1);
-		}
+		ishome = _strcmp("$HOME", dir);
+		ishome2 = _strcmp("~", dir);
+		isddash = _strcmp("--", dir);
 	}
-	else if (_strcmp(info->arguments[1], "-") == 0)
+
+	if (dir == NULL || !ishome || !ishome2 || !isddash)
 	{
-		d = _getenv("OLDPWD", environ);
-		if (d == NULL)
-		{
-			perror("cd");
-			return (-1);
-		}
+		cd_to_home(info);
+		return (1);
 	}
-	else
+
+	if (_strcmp("-", dir) == 0)
 	{
-		n = malloc(PATH_MAX);
-		getcwd(n, PATH_MAX);
-		setenv("OLDPWD", n, 1);
-		free(n);
-		if (chdir(info->arguments[1]))
-		{
-			perror("cd");
-			return (-1);
-		}
-		c = malloc(PATH_MAX + 5);
-		getcwd(c, PATH_MAX);
-		setenv("PWD", c, 1);
-		free(c);
+		cd_previous(info);
+		return (1);
 	}
+
+	if (_strcmp(".", dir) == 0 || _strcmp("..", dir) == 0)
+	{
+		cd_dot(info);
+		return (1);
+	}
+
+	cd_to(info);
 
 	return (1);
 }
