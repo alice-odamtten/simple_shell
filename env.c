@@ -65,5 +65,5 @@ int _envp(__attribute__((unused)) g_data * info)
 		write(STDOUT_FILENO, "\n", 1);
 		env++;
 	}
-	return (0);
+	return (1);
 }

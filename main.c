@@ -61,7 +61,7 @@ void process_interactive_commands(g_data *info)
 			rem_trail_spaces(info->command);
 			/*_strcpy(info->command, ptr);*/
 
-			/*_strcspin(info->command);*/
+			_strcspn(info->command);
 			if (_strlen(info->command) == 0)
 			{
 				ret++;
@@ -76,7 +76,7 @@ void process_interactive_commands(g_data *info)
 		{
 			if (is_shell_interactive())
 				_print_one_line("\n");
-			free(info->command);
+			free_all(info);
 			exit(0);
 		}
 	}

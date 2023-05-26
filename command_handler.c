@@ -93,6 +93,7 @@ int find_and_exec_cmd(g_data *info)
 		free_all(info);
 		exit(info->status);
 	}
+
 	return (ret);
 }
 

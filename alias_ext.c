@@ -59,18 +59,18 @@ int is_valid_alias(g_data *info, char *s)
 
 /**
  * find_alias - searches for an alias
- * @info: global data structure for application state
- * @idx: index to check for alias
+ * @alias_db: global data structure for application state
+ * @cmd: index to check for alias
  * Return: a node
  */
-l_node *find_alias(g_data *info, int idx)
+l_node *find_alias(l_node *alias_db, char *cmd)
 {
 	l_node *tmp;
 
-	tmp = info->alias_db;
+	tmp = alias_db;
 	while (tmp != NULL)
 	{
-		if (_strcmp(info->arguments[idx], tmp->data) == 0)
+		if (_strcmp(cmd, tmp->data) == 0)
 		{
 			return (tmp);
 		}

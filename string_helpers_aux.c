@@ -27,25 +27,20 @@ char *_strcspn(char *str)
  */
 char *_strncpy(char *dest, char *src, int n)
 {
-	int i, j;
-	char *s = dest;
+	char *d_ptr = dest;
+	char *s_ptr = src;
 
-	i = 0;
-	while (src[i] != '\0' && i < n - 1)
+	while (n > 0 && *s_ptr != '\0')
 	{
-		dest[i] = src[i];
-		i++;
+		d_ptr = s_ptr++;
+		n--;
 	}
-	if (i < n)
+	while (n > 0)
 	{
-		j = i;
-		while (j < n)
-		{
-			dest[j] = '\0';
-			j++;
-		}
+		*d_ptr++ = '\0';
+		n--;
 	}
-	return (s);
+	return (dest);
 }
 
 /**
@@ -89,7 +84,7 @@ char *atoi_rev(int n)
 /**
  * get_len - Get the lenght of a number.
  * @n: type int number.
- * Return: Lenght of a number.
+ * Return: Lenght of a number.i
  */
 int get_len(int n)
 {

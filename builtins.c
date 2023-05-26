@@ -91,7 +91,7 @@ int alias_func(g_data *info)
 		{
 			while (info->arguments[idx] != NULL)
 			{
-				tmp = find_alias(info, idx);
+				tmp = find_alias(info->alias_db, info->arguments[idx]);
 				if (tmp)
 				{
 					print_alias(tmp);

@@ -117,7 +117,7 @@ int contains_quotes(const char *str);
 /* aliases.c */
 int set_alias(g_data *info);
 int is_valid_alias(g_data *info, char *s);
-l_node *find_alias(g_data *info, int idx);
+l_node *find_alias(l_node *info, char *idx);
 void perform_alias_insert(g_data *info, char **data, char **sd);
 void process_alias(g_data *info, char ***k, int *excess_count);
 int token_copier(g_data *info, char **token, int *i);

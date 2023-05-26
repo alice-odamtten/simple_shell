@@ -17,7 +17,7 @@ void parse_command(g_data *info)
 
 	if (_strchr(quote, info->command[0]))
 	{
-		alias = find_alias(info, 0);
+		alias = find_alias(info->alias_db, info->command);
 		if (alias)
 			_strcpy(info->command, alias->sub_data);
 		rest = sanitize_string2(info->command);
@@ -25,7 +25,7 @@ void parse_command(g_data *info)
 	}
 	else
 	{
-		alias = find_alias(info, 0);
+		alias = find_alias(info->alias_db, info->command);
 
 		if (alias)
 			_strcpy(info->command, sanitize_string2(alias->sub_data));
