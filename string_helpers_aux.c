@@ -32,7 +32,7 @@ char *_strncpy(char *dest, char *src, int n)
 
 	while (n > 0 && *s_ptr != '\0')
 	{
-		d_ptr = s_ptr++;
+		*d_ptr++ = *s_ptr++;
 		n--;
 	}
 	while (n > 0)
