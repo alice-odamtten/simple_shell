@@ -59,7 +59,7 @@ typedef struct global_data
 	int readfd;
 	int argc;
 	int status;
-	/*char **env_db;*/
+	char **env_db;
 } g_data;
 
 /**

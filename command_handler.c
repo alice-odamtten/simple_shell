@@ -20,7 +20,7 @@ ssize_t exec_cmd(g_data *info, char *path)
 	{
 		if (execve(path, info->arguments, environ))
 		{
-			free(info->command);
+			free_all(info);
 		}
 		perror(info->file_name);
 		exit(EXIT_FAILURE);
