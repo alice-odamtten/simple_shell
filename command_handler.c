@@ -18,8 +18,8 @@ ssize_t exec_cmd(g_data *info, char *path)
 	}
 	else if (pid == 0)
 	{
-		if(execve(path, info->arguments, environ))
-		{	
+		if (execve(path, info->arguments, environ))
+		{
 			free(info->command);
 		}
 		perror(info->file_name);
