@@ -9,7 +9,7 @@
 ssize_t exec_cmd(g_data *info, char *path)
 {
 	const int pid = fork();
-
+	int status;
 
 	if (pid == -1)
 	{
@@ -27,18 +27,18 @@ ssize_t exec_cmd(g_data *info, char *path)
 	}
 	else
 	{
-		if (waitpid(pid, &(info->status), WUNTRACED)  == -1)
+		if (waitpid(pid, &(status), WUNTRACED)  == -1)
 		{
 			perror("wait");
 			exit(EXIT_FAILURE);
 		}
-		if (WIFEXITED(info->status) && WEXITSTATUS(info->status) != 0)
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		{
 			info->status = 2;
 			return (0);
 		}
 	}
-
+	info->status = status / 256;
 	return (1);
 }
 
@@ -123,9 +123,19 @@ int is_cmd(char *path)
  */
 int path_finder(g_data *info)
 {
-	int ret = 0;
-	char *commandPath = find_command_path(info->command);
-
+	int ret = 0, isexec;
+	char *commandPath;
+       
+	isexec = is_executable(info);
+	if (isexec == -1)
+		return (1);
+	/*if (isexec == 0)
+	{
+		commandPath = find_command_path(info->command);
+		if (check_err_cmd(commandPath, info) == 1)
+			return (1);
+	}*/
+	commandPath = find_command_path(info->command);
 	if (commandPath != NULL)
 	{
 		ret = exec_cmd(info, commandPath);

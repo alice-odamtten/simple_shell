@@ -208,4 +208,8 @@ void set_env(char *name, char *value, g_data *info);
 char *copy_info(char *name, char *value);
 int _setenv(g_data *info);
 int _unsetenv(g_data *info);
+
+int is_executable(g_data *info);
+int check_err_cmd(char *dir, g_data *info);
+
 #endif
