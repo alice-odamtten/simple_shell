@@ -52,6 +52,8 @@ ssize_t handle_builtins(g_data *info)
 	{"exit", exit_func},
 	{"cd", cd_func},
 	{"env", _envp},
+	{"setenv", _setenv},
+	{"unset", _unsetenv},
 	{"alias", alias_func},
 	{"unalias", unalias_func},
 	{"help", help_func},

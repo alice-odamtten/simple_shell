@@ -42,7 +42,8 @@ typedef struct node
  * @file: file inputs
  * @readfd: file descriptors
  * @argc: number of inputs from cli
- * @status: checks yhe status
+ * @status: checks the status of cmd
+ * @env_db: handles envs of the program
  * Description: global data structure for variables
  */
 typedef struct global_data
@@ -58,6 +59,7 @@ typedef struct global_data
 	int readfd;
 	int argc;
 	int status;
+	char **env_db;
 } g_data;
 
 /**
@@ -143,13 +145,9 @@ int path_finder(g_data *info);
 ssize_t handle_builtins(g_data *info);
 
 /* setenv */
-int _existadd(char **env, char *buffer);
-int _setenv(char *n, char *val, int w);
-int _envp(g_data *info);
 int _envp(__attribute__((unused)) g_data *info);
 int setenv_func(g_data *info);
 int unsetenv_func(g_data *info);
-int _unsetenv(g_data *info, char *var);
 
 /* strings_helper_ext.c */
 int _strcmp(const char *s, const char *t);
@@ -206,4 +204,8 @@ void cd_previous(g_data *datash);
 void cd_to_home(g_data *datash);
 void rev_string(char *s);
 
+void set_env(char *name, char *value, g_data *info);
+char *copy_info(char *name, char *value);
+int _setenv(g_data *info);
+int _unsetenv(g_data *info);
 #endif

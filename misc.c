@@ -9,6 +9,7 @@
  */
 void init_g_data(g_data *info, char **av, int c)
 {
+	int i;
 
 	info->file_name = av[0];
 	info->file = av[1];
@@ -19,6 +20,18 @@ void init_g_data(g_data *info, char **av, int c)
 	info->alias_db = NULL;
 	info->command = NULL;
 	info->status = 0;
+
+	for (i = 0; environ[i]; i++)
+		;
+
+	info->env_db = malloc(sizeof(char *) * (i + 1));
+
+	for (i = 0; environ[i]; i++)
+	{
+		info->env_db[i] = _strdup(environ[i]);
+	}
+
+	info->env_db[i] = NULL;
 }
 
 /**
@@ -38,7 +51,7 @@ ssize_t is_shell_interactive(void)
 void free_all(g_data *info)
 {
 
-	/*free(info->environ);*/
+	free(info->env_db);
 	freeList(&(info->alias_db));
 }
 
