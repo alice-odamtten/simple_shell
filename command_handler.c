@@ -50,7 +50,7 @@ ssize_t exec_cmd(g_data *info, char *path)
  */
 void cmd_handler(g_data *info, int c)
 {
-	int fd = 0;
+	FILE *fd;
 
 	if (c == 1)
 	{
@@ -58,7 +58,7 @@ void cmd_handler(g_data *info, int c)
 	}
 	else if (c == 2)
 	{
-		fd = open(info->file, O_RDONLY);
+		fd = fopen(info->file, "r");
 		process_file_commands(info, fd);
 	}
 	else

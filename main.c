@@ -88,15 +88,12 @@ void process_interactive_commands(g_data *info)
  * @fd: file descriptor for inputs
  * Return: 1 or 0
  */
-int process_file_commands(g_data *info, int fd)
+int process_file_commands(g_data *info, FILE *fd)
 {
-	char *line = NULL;
 	size_t len = 0;
 
-	info->readfd = fd;
-	(void)info;
 
-	if (fd == -1)
+	if (!fd)
 	{
 		_eprint_one_line(info->file_name);
 		_eprint_one_line(": 0: Can't open ");
@@ -108,14 +105,15 @@ int process_file_commands(g_data *info, int fd)
 		return (EXIT_FAILURE);
 	}
 
-	while (_getline(&line, &len, fd))
+
+	while (getline(&(info->command), &len, fd))
 	{
-		_strcpy(info->command, line);
 		_strcspn(info->command);
 		find_and_exec_cmd(info);
 	}
 
-	close(fd);
+	fclose(fd);
+	/*exit(0);*/
 	return (1);
 }
 

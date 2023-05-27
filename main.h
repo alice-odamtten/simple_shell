@@ -179,7 +179,7 @@ char *_sttrtok(char *p, const char *delim);
 int _getline(char **line, size_t *len, int fd);
 
 /* error_ext.c */
-int process_file_commands(g_data *info, int fd);
+int process_file_commands(g_data *info, FILE *fd);
 void _eprint_one_line(const char *s);
 
 /* string_helpers_aux.c */
