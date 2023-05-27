@@ -94,13 +94,15 @@ int process_file_commands(g_data *info, int fd)
 	size_t len = 0;
 
 	info->readfd = fd;
+	(void)info;
 
 	if (fd == -1)
 	{
-		_strcat(info->file_name, ": 0: Can't open ");
-		_strcat(info->file_name, info->file);
-		_strcat(info->file_name, "\0");
 		_eprint_one_line(info->file_name);
+		_eprint_one_line(": 0: Can't open ");
+		_eprint_one_line(info->file);
+		_eprint_one_line("\0");
+		_eprint_one_line("\n");
 		exit(127);
 
 		return (EXIT_FAILURE);
