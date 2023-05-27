@@ -98,9 +98,9 @@ int process_file_commands(g_data *info, int fd)
 	if (fd == -1)
 	{
 		_strcat(info->file_name, ": 0: Can't open ");
-		_strcat(info->filename, info->file);
-		_strcat(info->filename, "\0");
-		_eprint_one_line(info->filename);
+		_strcat(info->file_name, info->file);
+		_strcat(info->file_name, "\0");
+		_eprint_one_line(info->file_name);
 		exit(127);
 
 		return (EXIT_FAILURE);
